@@ -1046,8 +1046,8 @@ footer {
 <script>
 /* ═══ UTILITY ═══ */
 const WHATSAPP_NUM = '919819590598';
-const TELEGRAM_TOKEN = 'YOUR_BOT_TOKEN';
-const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
+const TELEGRAM_TOKEN = '8864527966:AAHoPNbnWZBbUrfT_0eCEjM4llpeFyD3PT0';
+const TELEGRAM_CHAT_ID = '5003718919';
 const SLACK_WEBHOOK = 'YOUR_SLACK_WEBHOOK';
 
 const charts = {};
@@ -1137,8 +1137,8 @@ function showToast() {
 
 function sendToChannels(name, phone, source, extra) {
   const msg = `🎯 *New Lead — Nidesh.com*\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📍 *Source:* ${source}\n${extra||''}\n🕐 *Time:* ${new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})}`;
-  if (TELEGRAM_TOKEN !== 'YOUR_BOT_TOKEN') {
-    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:msg,parse_mode:'Markdown'})}).catch(()=>{});
+  if (TELEGRAM_TOKEN !== '8864527966:AAHoPNbnWZBbUrfT_0eCEjM4llpeFyD3PT0') {
+    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:5003718919,text:msg,parse_mode:'Markdown'})}).catch(()=>{});
   }
   if (SLACK_WEBHOOK !== 'YOUR_SLACK_WEBHOOK') {
     fetch(SLACK_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:msg})}).catch(()=>{});
