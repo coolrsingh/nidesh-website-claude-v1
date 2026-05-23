@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nidesh Financial Services — Smart Wealth Planning</title>
+<meta name="description" content="Free SIP, SWP, Home Loan and wealth calculators with expert mutual fund advisory in Kalyan, Thane & Mumbai.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+/* ═══ DESIGN TOKENS ═══ */
+:root {
+  --sky: #EBF4FF;
+  --sky-mid: #DBEAFE;
+  --sky-deep: #BFDBFE;
+  --blue: #2563EB;
+  --blue-dark: #1D4ED8;
+  --blue-mid: #3B82F6;
+  --blue-light: #93C5FD;
+  --navy: #1E3A5F;
+  --navy-mid: #2D5282;
+  --teal: #0EA5E9;
+  --mint: #E0F2FE;
+  --white: #FFFFFF;
+  --off-white: #F8FAFF;
+  --cream: #F0F7FF;
+  --border: #DBEAFE;
+  --border-mid: #BFDBFE;
+  --text-main: #0F172A;
+  --text-mid: #334155;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --gold: #D97706;
+  --shadow-sm: 0 1px 4px rgba(37,99,235,0.08);
+  --shadow-md: 0 4px 16px rgba(37,99,235,0.12);
+  --shadow-lg: 0 8px 32px rgba(37,99,235,0.15);
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ NAV ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5vw;
+  height: 64px;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; color: var(--navy);
+  text-decoration: none; display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: white;
+}
+.nav-logo span { font-size: 0.7rem; font-family: 'DM Sans', sans-serif; color: var(--text-muted); display: block; }
+.nav-links { display: flex; align-items: center; gap: 0.25rem; }
+.nav-link {
+  padding: 0.45rem 0.9rem; border-radius: 8px; text-decoration: none;
+  font-size: 0.85rem; font-weight: 500; color: var(--text-mid);
+  transition: all 0.2s; border: none; background: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-link:hover, .nav-link.active { background: var(--sky); color: var(--blue); }
+.nav-cta {
+  background: var(--blue); color: white !important;
+  padding: 0.5rem 1.25rem; border-radius: 8px;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+}
+.nav-cta:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
+
+/* ═══ PAGES ═══ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh;
+  padding: 8rem 5vw 5rem;
+  background: linear-gradient(160deg, var(--white) 0%, var(--sky) 40%, var(--mint) 100%);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1200px; margin: 0 auto; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--sky-mid); border: 1px solid var(--border-mid);
+  border-radius: 100px; padding: 0.4rem 1rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--blue); text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+h1.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  line-height: 1.18; color: var(--navy); margin-bottom: 1.25rem;
+}
+h1.hero-title em { font-style: italic; color: var(--blue); }
+.hero-sub { font-size: 1.05rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 2rem; max-width: 460px; }
+
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn-primary {
+  background: var(--blue); color: white;
+  padding: 0.85rem 1.75rem; border-radius: 10px;
+  font-weight: 600; font-size: 0.95rem; text-decoration: none;
+  border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+  transition: all 0.2s; display: inline-block;
+}
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.4); }
+.btn-outline {
+  background: white; color: var(--blue);
+  padding: 0.85rem 1.75rem; border-radius: 10px;
+  font-weight: 600; font-size: 0.95rem; text-decoration: none;
+  border: 2px solid var(--blue-light); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.2s; display: inline-block;
+}
+.btn-outline:hover { border-color: var(--blue); background: var(--sky); }
+
+.hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+.hstat { text-align: center; }
+.hstat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); font-weight: 700; }
+.hstat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+/* HERO CHART CARD */
+.hero-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 1.75rem;
+  box-shadow: var(--shadow-lg);
+}
+.hero-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+.hero-card-title { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.hero-card-val { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--navy); }
+.hero-card-chg { font-size: 0.8rem; font-weight: 600; color: var(--success); background: #ECFDF5; padding: 3px 10px; border-radius: 20px; }
+
+.hero-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+.hmini {
+  background: var(--sky); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.85rem;
+}
+.hmini-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.hmini-val { font-size: 1rem; font-weight: 700; color: var(--navy); margin-top: 3px; }
+.hmini-sub { font-size: 0.68rem; color: var(--blue); margin-top: 1px; }
+
+/* ═══ CALC CARDS ON HOME ═══ */
+.calc-nav-section { padding: 5rem 5vw; background: var(--white); }
+.section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.6rem; }
+h2.section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.8vw, 2.4rem); color: var(--navy); line-height: 1.25; margin-bottom: 1rem; }
+h2.section-title em { font-style: italic; color: var(--blue); }
+.section-intro { font-size: 1rem; color: var(--text-muted); max-width: 540px; line-height: 1.7; margin-bottom: 2.5rem; }
+
+.calc-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+.calc-nav-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r-lg); padding: 1.75rem;
+  cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+}
+.calc-nav-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+}
+.calc-nav-card:hover { border-color: var(--blue-light); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.calc-nav-card:hover::before { transform: scaleX(1); }
+.calc-icon-wrap {
+  width: 52px; height: 52px; border-radius: 12px;
+  background: var(--sky); display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+.calc-nav-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+.calc-nav-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; flex: 1; }
+.calc-nav-card .card-arrow { font-size: 0.8rem; color: var(--blue); font-weight: 600; margin-top: 1rem; }
+
+/* ═══ LEAD BAR ═══ */
+.lead-bar {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 2.5rem 5vw; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+}
+.lead-bar-text { flex: 1; min-width: 220px; }
+.lead-bar-text h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: white; margin-bottom: 0.3rem; }
+.lead-bar-text p { font-size: 0.85rem; color: var(--sky-deep); }
+.lead-bar-form { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.lb-input {
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px; padding: 0.7rem 1rem; color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
+  width: 180px; outline: none; transition: border-color 0.2s;
+}
+.lb-input::placeholder { color: rgba(255,255,255,0.45); }
+.lb-input:focus { border-color: rgba(255,255,255,0.5); }
+.btn-white {
+  background: white; color: var(--blue); border: none;
+  padding: 0.7rem 1.4rem; border-radius: 8px; font-weight: 700;
+  font-size: 0.875rem; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s; white-space: nowrap;
+}
+.btn-white:hover { background: var(--sky); }
+
+/* ═══ CALCULATOR PAGES ═══ */
+.calc-page-wrapper {
+  padding: 5.5rem 5vw 4rem;
+  background: var(--off-white);
+  min-height: 100vh;
+}
+.calc-page-header { max-width: 1300px; margin: 0 auto 2rem; }
+.calc-page-header .back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; color: var(--text-muted); text-decoration: none;
+  margin-bottom: 1rem; cursor: pointer; background: none; border: none;
+  font-family: 'DM Sans', sans-serif; transition: color 0.2s;
+}
+.calc-page-header .back-btn:hover { color: var(--blue); }
+.calc-page-header h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); }
+.calc-page-header p { font-size: 0.95rem; color: var(--text-muted); margin-top: 0.4rem; }
+
+.calc-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1300px; margin: 0 auto; align-items: start; }
+.calc-layout.wide { grid-template-columns: 420px 1fr; }
+
+/* CALC CARD */
+.calc-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+.calc-card-title { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+.calc-card-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.input-field-wrap { margin-bottom: 1.25rem; }
+.ifw-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.ifw-label { font-size: 0.83rem; font-weight: 500; color: var(--text-mid); }
+.ifw-num {
+  width: 130px; padding: 6px 10px;
+  border: 1px solid var(--border); border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  font-weight: 600; text-align: right; color: var(--blue);
+  background: var(--sky); outline: none; transition: all 0.15s;
+}
+.ifw-num:focus { border-color: var(--blue); background: white; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+input[type="range"] { width: 100%; accent-color: var(--blue); cursor: pointer; }
+.select-f {
+  width: 100%; padding: 10px 12px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--sky); color: var(--text-main);
+  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.88rem;
+  outline: none; cursor: pointer;
+}
+.select-f:focus { border-color: var(--blue); }
+
+.divider-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin: 1.25rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+/* METRICS */
+.metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.metric-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 1.25rem;
+  box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+}
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+.mc-blue::before { background: var(--blue); }
+.mc-green::before { background: var(--success); }
+.mc-amber::before { background: var(--warning); }
+.mc-red::before { background: var(--danger); }
+.metric-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+.metric-val { font-family: 'DM Serif Display', serif; font-size: 1.5rem; line-height: 1.1; }
+.mv-blue { color: var(--blue); }
+.mv-green { color: var(--success); }
+.mv-amber { color: var(--warning); }
+.mv-red { color: var(--danger); }
+.metric-sub { font-size: 0.7rem; color: var(--text-subtle); margin-top: 4px; }
+
+/* CHART CARD */
+.chart-holder {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 1.75rem;
+  box-shadow: var(--shadow-sm); margin-bottom: 1.5rem;
+}
+.chart-holder-title { font-size: 0.88rem; font-weight: 600; color: var(--text-mid); margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.chart-wrap { position: relative; width: 100%; height: 280px; }
+.legend-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--text-muted); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* AI INSIGHTS CARD */
+.ai-card {
+  background: linear-gradient(135deg, #EFF6FF 0%, #F0F9FF 100%);
+  border: 1.5px solid var(--blue-light);
+  border-radius: var(--r-xl); padding: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.ai-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+.ai-badge {
+  background: var(--blue); color: white;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+  padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+}
+.ai-card-header h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+.ai-insights { display: flex; flex-direction: column; gap: 0.75rem; }
+.ai-insight {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: white; border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.85rem 1rem;
+}
+.ai-insight-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.ai-insight-text { font-size: 0.83rem; color: var(--text-mid); line-height: 1.55; }
+.ai-insight-text strong { color: var(--navy); font-weight: 600; }
+
+/* ALERT BANNER */
+.alert-box {
+  display: none;
+  align-items: center; gap: 10px;
+  background: #FFF1F2; border: 1px solid #FECDD3;
+  border-radius: var(--r-md); padding: 1rem 1.25rem;
+  font-size: 0.85rem; font-weight: 500; color: var(--danger);
+  margin-bottom: 1rem;
+}
+.alert-box.show { display: flex; }
+
+/* TABLE */
+.table-wrap {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: var(--shadow-sm); margin-bottom: 1.5rem;
+}
+.table-head-bar {
+  padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
+  background: var(--sky); display: flex; justify-content: space-between; align-items: center;
+}
+.table-head-title { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+.export-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--navy); color: white; border: none;
+  padding: 7px 14px; border-radius: 8px; cursor: pointer;
+  font-size: 0.78rem; font-weight: 600; font-family: 'DM Sans', sans-serif;
+  transition: background 0.15s;
+}
+.export-btn:hover { background: var(--blue); }
+.table-scroll { max-height: 380px; overflow-y: auto; }
+.table-scroll::-webkit-scrollbar { width: 4px; }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--sky-deep); border-radius: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+thead th {
+  position: sticky; top: 0; background: #F1F8FF;
+  padding: 11px 16px; font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
+  border-bottom: 1px solid var(--border); z-index: 5;
+}
+tbody td { padding: 11px 16px; border-bottom: 1px solid #F1F5F9; color: var(--text-main); }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--sky); }
+.pill { display: inline-block; padding: 3px 9px; border-radius: 12px; font-size: 0.72rem; font-weight: 600; }
+.pill-invest { background: #ECFDF5; color: #065F46; }
+.pill-pause  { background: #FFFBEB; color: #92400E; }
+.pill-swp    { background: #FFF1F2; color: #9F1239; }
+.pill-swp-warn { background: var(--danger); color: white; }
+.pill-depleted { background: #F1F5F9; color: #475569; }
+.depl-flag { display: inline-flex; align-items: center; background: #FEE2E2; border: 1px solid #FCA5A5; color: var(--danger); padding: 2px 7px; border-radius: 10px; font-size: 0.68rem; font-weight: 600; margin-left: 6px; }
+.row-warn td { background: #FFFBEB; }
+.row-depleted td { background: #FFF1F2; opacity: 0.75; }
+
+/* INLINE LEAD FORM */
+.inline-lead {
+  background: white; border: 1.5px solid var(--blue-light);
+  border-radius: var(--r-xl); padding: 2rem;
+  box-shadow: var(--shadow-md);
+}
+.inline-lead h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.3rem; }
+.inline-lead p { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.5; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.fg { margin-bottom: 0.85rem; }
+.fg label { display: block; font-size: 0.73rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.fg input, .fg select {
+  width: 100%; padding: 0.7rem 0.9rem;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+  color: var(--text-main); background: var(--sky); outline: none;
+  transition: border-color 0.2s;
+}
+.fg input:focus, .fg select:focus { border-color: var(--blue); background: white; }
+.fg input::placeholder { color: var(--text-subtle); }
+.fg select option { background: white; }
+.btn-form {
+  width: 100%; background: var(--blue); color: white; border: none;
+  border-radius: 10px; padding: 0.9rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; margin-top: 0.25rem;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+}
+.btn-form:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.form-note { font-size: 0.7rem; color: var(--text-subtle); text-align: center; margin-top: 0.6rem; }
+.form-success-box { display: none; text-align: center; padding: 1.5rem; }
+.form-success-box .big-tick { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+.form-success-box strong { color: var(--blue); font-size: 1rem; display: block; margin-bottom: 0.4rem; }
+.form-success-box p { font-size: 0.83rem; color: var(--text-muted); }
+
+/* TOAST */
+.toast {
+  display: none; position: fixed; bottom: 5rem; right: 2rem; z-index: 500;
+  background: var(--navy); border: 1px solid var(--blue-light);
+  border-radius: 12px; padding: 1rem 1.5rem; color: white;
+  font-size: 0.85rem; box-shadow: var(--shadow-lg); max-width: 320px;
+}
+.toast.show { display: block; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from{transform:translateY(10px);opacity:0} to{transform:translateY(0);opacity:1} }
+.toast-title { font-weight: 700; color: #93C5FD; margin-bottom: 3px; }
+
+/* FLOAT BTN */
+.float-btn {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 300;
+  background: var(--blue); color: white; border: none;
+  border-radius: 50px; padding: 0.875rem 1.5rem;
+  font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.875rem;
+  cursor: pointer; box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+  display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+}
+.float-btn:hover { background: var(--blue-dark); transform: translateY(-2px); }
+
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 400;
+  background: rgba(15,23,42,0.5); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 2.5rem; width: 440px; max-width: 92vw;
+  position: relative; box-shadow: 0 24px 60px rgba(15,23,42,0.2);
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 32px; height: 32px; background: var(--sky); border: none;
+  border-radius: 8px; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); transition: background 0.2s;
+}
+.modal-close:hover { background: var(--sky-deep); }
+.modal-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.35rem; }
+.modal-box > p { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+/* SERVICES SECTION */
+.services-section { padding: 5rem 5vw; background: var(--sky); }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1200px; margin: 0 auto; }
+.svc-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 1.75rem;
+  transition: box-shadow 0.2s;
+}
+.svc-card:hover { box-shadow: var(--shadow-md); }
+.svc-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: rgba(37,99,235,0.12); font-weight: 700; line-height: 1; margin-bottom: 0.75rem; }
+.svc-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+.svc-card p { font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; }
+
+/* CONTACT SECTION */
+.contact-section { padding: 4rem 5vw; background: var(--navy); }
+.contact-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
+.contact-text h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: white; margin-bottom: 0.4rem; }
+.contact-text p { font-size: 0.85rem; color: var(--sky-deep); }
+.contact-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.contact-link {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px; padding: 0.7rem 1.2rem;
+  color: white; text-decoration: none; font-size: 0.85rem; font-weight: 500;
+  transition: all 0.2s;
+}
+.contact-link:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.3); }
+
+footer {
+  text-align: center; padding: 1.5rem 5vw;
+  border-top: 1px solid var(--border); background: white;
+  font-size: 0.75rem; color: var(--text-subtle); line-height: 1.7;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-card { display: none; }
+  .calc-layout, .calc-layout.wide { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  nav ul { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: 1fr; }
+  .form-row-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-icon">💎</div>
+    <div>Nidesh Financial<span>SEBI Reg. MFD · Kalyan · Thane · Mumbai</span></div>
+  </a>
+  <div class="nav-links">
+    <button class="nav-link active" id="nav-home" onclick="showPage('home')">Home</button>
+    <button class="nav-link" id="nav-sip" onclick="showPage('sip')">SIP</button>
+    <button class="nav-link" id="nav-multi" onclick="showPage('multi')">Multi-Phase</button>
+    <button class="nav-link" id="nav-loan" onclick="showPage('loan')">Home Loan</button>
+    <button class="nav-link" id="nav-elig" onclick="showPage('elig')">Loan Eligibility</button>
+    <button class="nav-link nav-cta" onclick="openModal()">Free Consult</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: HOME -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">AMFI Registered MFD · Est. 2016</div>
+        <h1 class="hero-title">Grow Wealth With <em>Purpose</em> & Clarity</h1>
+        <p class="hero-sub">Mutual fund advisory, SIP planning, demat accounts and personalised financial roadmaps for working professionals in Kalyan, Thane & Mumbai.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="openModal()">Get Free Portfolio Review</button>
+          <button class="btn-outline" onclick="showPage('sip')">Try SIP Calculator</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat"><div class="hstat-num">₹60L+</div><div class="hstat-label">AUM Managed</div></div>
+          <div class="hstat"><div class="hstat-num">200+</div><div class="hstat-label">Families</div></div>
+          <div class="hstat"><div class="hstat-num">8+ Yrs</div><div class="hstat-label">Experience</div></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div>
+            <div class="hero-card-title">Nifty 50 · 10-Year Growth</div>
+            <div class="hero-card-val">₹1L → ₹4.2L</div>
+          </div>
+          <div class="hero-card-chg">+318% | 12.4% CAGR</div>
+        </div>
+        <div style="position:relative;height:180px;">
+          <canvas id="heroChart" role="img" aria-label="Nifty 50 ten year growth">10yr growth chart</canvas>
+        </div>
+        <div class="hero-mini-grid">
+          <div class="hmini"><div class="hmini-label">Large Cap CAGR</div><div class="hmini-val">11–13%</div><div class="hmini-sub">10-yr median</div></div>
+          <div class="hmini"><div class="hmini-label">Mid Cap CAGR</div><div class="hmini-val">14–17%</div><div class="hmini-sub">10-yr median</div></div>
+          <div class="hmini"><div class="hmini-label">₹10K/mo @12%</div><div class="hmini-val">→ ₹1 Cr</div><div class="hmini-sub">in 20 years</div></div>
+          <div class="hmini"><div class="hmini-label">Beat Inflation by</div><div class="hmini-val">+5–9%</div><div class="hmini-sub">real return edge</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD BAR -->
+  <div class="lead-bar">
+    <div class="lead-bar-text">
+      <h3>📞 Free 30-min Portfolio Review</h3>
+      <p>Limited slots this month. Tell us your number and we'll call within 24 hours.</p>
+    </div>
+    <div class="lead-bar-form">
+      <input class="lb-input" type="text" id="lbName" placeholder="Your name" />
+      <input class="lb-input" type="tel" id="lbPhone" placeholder="Mobile number" />
+      <button class="btn-white" onclick="submitBar()">Request Callback</button>
+    </div>
+  </div>
+
+  <!-- CALCULATORS SECTION -->
+  <section class="calc-nav-section">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div class="section-label">Free Planning Tools</div>
+      <h2 class="section-title">Your <em>Wealth Calculators</em></h2>
+      <p class="section-intro">Interactive calculators that simulate your real wealth journey — with AI-powered insights on every page to help you make smarter decisions.</p>
+      <div class="calc-cards-grid">
+        <div class="calc-nav-card" onclick="showPage('sip')">
+          <div class="calc-icon-wrap">📈</div>
+          <h3>SIP Calculator</h3>
+          <p>Find out exactly how much wealth your monthly SIP will build — with real compound projections.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </div>
+        <div class="calc-nav-card" onclick="showPage('multi')">
+          <div class="calc-icon-wrap">🚀</div>
+          <h3>Multi-Phase Planner</h3>
+          <p>Model your complete wealth lifecycle — accumulation, compounding pause, and SWP retirement income.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </div>
+        <div class="calc-nav-card" onclick="showPage('lumpsum')">
+          <div class="calc-icon-wrap">💰</div>
+          <h3>Lump Sum Calculator</h3>
+          <p>Project how a one-time investment grows at different CAGR scenarios over 1–40 years.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </div>
+        <div class="calc-nav-card" onclick="showPage('loan')">
+          <div class="calc-icon-wrap">🏠</div>
+          <h3>Home Loan EMI</h3>
+          <p>Know your exact EMI, total interest and real cost of your home across different rates and tenures.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </div>
+        <div class="calc-nav-card" onclick="showPage('elig')">
+          <div class="calc-icon-wrap">✅</div>
+          <h3>Loan Eligibility</h3>
+          <p>Calculate maximum loan amount you qualify for based on income, FOIR norms and tenure.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title" style="margin-bottom:2rem;">Complete <em>Financial Services</em></h2>
+      <div class="services-grid">
+        <div class="svc-card"><div class="svc-num">01</div><h3>Mutual Fund Advisory</h3><p>Curated SIP portfolios across equity, debt, hybrid and ELSS matched to your risk profile and goals.</p></div>
+        <div class="svc-card"><div class="svc-num">02</div><h3>Demat Account Opening</h3><p>Paperless demat and trading account opening through Angel Broking with full onboarding support.</p></div>
+        <div class="svc-card"><div class="svc-num">03</div><h3>Tax Planning (80C / ELSS)</h3><p>Save up to ₹46,800 in taxes annually while building long-term equity wealth through ELSS.</p></div>
+        <div class="svc-card"><div class="svc-num">04</div><h3>SIP &amp; Lump Sum Investments</h3><p>Start SIPs from ₹500/month. Strategic lump sum deployment during market corrections.</p></div>
+        <div class="svc-card"><div class="svc-num">05</div><h3>Fixed Deposits &amp; Bonds</h3><p>Stable return instruments — corporate FDs, RBI Floating Rate Bonds, and treasury-backed options.</p></div>
+        <div class="svc-card"><div class="svc-num">06</div><h3>Retirement &amp; Goal Planning</h3><p>Corpus planning for retirement, child education goals, and milestone-based financial roadmaps.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <h3>Let's Talk Money</h3>
+        <p>Based in Kalyan · Serving Thane &amp; Mumbai · Mon–Sat 9AM–8PM</p>
+      </div>
+      <div class="contact-links">
+        <a href="https://wa.me/919819590598" class="contact-link" target="_blank">💬 WhatsApp</a>
+        <a href="tel:+919819590598" class="contact-link">📞 +91 98195 90598</a>
+        <a href="mailto:investments.nidesh@outlook.com" class="contact-link">✉️ Email Us</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Nidesh Financial Services · Kalyan, Maharashtra · AMFI Registered MFD</p>
+    <p>Mutual fund investments are subject to market risks. Past performance is not indicative of future returns. All projections are illustrative only. This is not financial advice.</p>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: SIP CALCULATOR -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-sip">
+  <div class="calc-page-wrapper">
+    <div class="calc-page-header">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <h2>SIP Calculator</h2>
+      <p>Monthly SIP · Compound growth projections · Personalised insights</p>
+    </div>
+
+    <div class="calc-layout wide">
+      <!-- LEFT: CONTROLS + LEAD FORM -->
+      <div>
+        <div class="calc-card" style="margin-bottom:1.25rem;">
+          <div class="calc-card-title">⚙️ SIP Parameters</div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Monthly SIP Amount (₹)</label><input type="number" id="s_sip_num" class="ifw-num" value="10000" step="500"></div>
+            <input type="range" id="s_sip_r" min="1000" max="500000" value="10000" step="500">
+          </div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Expected CAGR (% p.a.)</label><input type="number" id="s_rate_num" class="ifw-num" value="12" step="0.5"></div>
+            <input type="range" id="s_rate_r" min="1" max="40" value="12" step="0.5">
+          </div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Investment Tenure (Years)</label><input type="number" id="s_yrs_num" class="ifw-num" value="15" step="1"></div>
+            <input type="range" id="s_yrs_r" min="1" max="40" value="15" step="1">
+          </div>
+        </div>
+
+        <div class="inline-lead" id="sip-lead-form">
+          <h3>Talk to Rahul</h3>
+          <p>Get a personalised SIP recommendation based on your income, goals and risk appetite — free, no obligation.</p>
+          <div id="sip-lead-wrap">
+            <div class="form-row-2">
+              <div class="fg"><label>Name</label><input type="text" id="sl_name" placeholder="Your name"></div>
+              <div class="fg"><label>Phone</label><input type="tel" id="sl_phone" placeholder="Mobile number"></div>
+            </div>
+            <div class="fg">
+              <label>Monthly SIP Budget</label>
+              <select id="sl_budget">
+                <option value="" disabled selected>Select range</option>
+                <option>₹500–₹2,000</option><option>₹2,000–₹5,000</option>
+                <option>₹5,000–₹10,000</option><option>₹10,000–₹25,000</option>
+                <option>₹25,000+</option>
+              </select>
+            </div>
+            <button class="btn-form" onclick="submitLead('sip-lead-wrap','sip-lead-ok',event,'SIP Page',()=>{document.getElementById('sl_name').value;})">Start My SIP →</button>
+            <p class="form-note">🔒 No spam. We call once to understand your needs.</p>
+          </div>
+          <div class="form-success-box" id="sip-lead-ok">
+            <span class="big-tick">✅</span>
+            <strong>Received! Expect a WhatsApp message soon.</strong>
+            <p>Rahul will reach out within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: RESULTS -->
+      <div>
+        <div class="metrics-row">
+          <div class="metric-card mc-green"><div class="metric-label">Total Invested</div><div class="metric-val mv-green" id="sip_inv">₹0</div><div class="metric-sub" id="sip_inv_sub"></div></div>
+          <div class="metric-card mc-amber"><div class="metric-label">Returns Earned</div><div class="metric-val mv-amber" id="sip_ret">₹0</div><div class="metric-sub" id="sip_ret_sub"></div></div>
+          <div class="metric-card mc-blue"><div class="metric-label">Terminal Corpus</div><div class="metric-val mv-blue" id="sip_corp">₹0</div><div class="metric-sub" id="sip_corp_sub"></div></div>
+        </div>
+
+        <div class="ai-card" id="sip-insights">
+          <div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>What Your Numbers Say</h4></div>
+          <div class="ai-insights" id="sip-insights-list"></div>
+        </div>
+
+        <div class="chart-holder">
+          <div class="chart-holder-title">
+            Corpus Growth Over Time
+            <div class="legend-row"><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Invested Amount</div><div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Total Corpus</div></div>
+          </div>
+          <div class="chart-wrap"><canvas id="sipChart" role="img" aria-label="SIP corpus growth chart">SIP growth</canvas></div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-head-bar"><div class="table-head-title">Year-by-Year Projection</div><button class="export-btn" onclick="exportCSV('sipTable','sip')">⬇ Export CSV</button></div>
+          <div class="table-scroll"><table><thead id="sipTHead"></thead><tbody id="sipTBody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: LUMP SUM -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-lumpsum">
+  <div class="calc-page-wrapper">
+    <div class="calc-page-header">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <h2>Lump Sum Calculator</h2>
+      <p>Project one-time investment growth over any tenure at any expected CAGR</p>
+    </div>
+    <div class="calc-layout wide">
+      <div>
+        <div class="calc-card" style="margin-bottom:1.25rem;">
+          <div class="calc-card-title">⚙️ Lump Sum Parameters</div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Initial Investment (₹)</label><input type="number" id="l_lump_num" class="ifw-num" value="500000" step="50000"></div>
+            <input type="range" id="l_lump_r" min="0" max="10000000" value="500000" step="50000">
+          </div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Expected CAGR (% p.a.)</label><input type="number" id="l_rate_num" class="ifw-num" value="12" step="0.5"></div>
+            <input type="range" id="l_rate_r" min="1" max="40" value="12" step="0.5">
+          </div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Investment Tenure (Years)</label><input type="number" id="l_yrs_num" class="ifw-num" value="15" step="1"></div>
+            <input type="range" id="l_yrs_r" min="1" max="40" value="15" step="1">
+          </div>
+        </div>
+        <div class="inline-lead">
+          <h3>Invest This Lump Sum</h3>
+          <p>Have a surplus to invest? Rahul can help you pick the right fund based on your timeline and risk profile.</p>
+          <div id="ls-lead-wrap">
+            <div class="form-row-2">
+              <div class="fg"><label>Name</label><input type="text" id="ll_name" placeholder="Your name"></div>
+              <div class="fg"><label>Phone</label><input type="tel" id="ll_phone" placeholder="Mobile number"></div>
+            </div>
+            <div class="fg"><label>Amount to Invest</label><select id="ll_amt"><option value="" disabled selected>Select range</option><option>Under ₹1 Lakh</option><option>₹1–5 Lakhs</option><option>₹5–25 Lakhs</option><option>₹25 Lakhs+</option></select></div>
+            <button class="btn-form" onclick="submitLead('ls-lead-wrap','ls-lead-ok',event,'LumpSum Page')">Invest Now →</button>
+            <p class="form-note">🔒 No spam. Personal call within 24 hrs.</p>
+          </div>
+          <div class="form-success-box" id="ls-lead-ok"></div>
+        </div>
+      </div>
+      <div>
+        <div class="metrics-row">
+          <div class="metric-card mc-green"><div class="metric-label">Principal Invested</div><div class="metric-val mv-green" id="ls_inv">₹0</div><div class="metric-sub">One-time investment</div></div>
+          <div class="metric-card mc-amber"><div class="metric-label">Returns Earned</div><div class="metric-val mv-amber" id="ls_ret">₹0</div><div class="metric-sub" id="ls_ret_sub"></div></div>
+          <div class="metric-card mc-blue"><div class="metric-label">Terminal Value</div><div class="metric-val mv-blue" id="ls_corp">₹0</div><div class="metric-sub" id="ls_corp_sub"></div></div>
+        </div>
+        <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>What Your Numbers Say</h4></div><div class="ai-insights" id="ls-insights-list"></div></div>
+        <div class="chart-holder">
+          <div class="chart-holder-title">Lump Sum Growth Over Time</div>
+          <div class="chart-wrap"><canvas id="lsChart" role="img" aria-label="Lump sum growth">Lump sum chart</canvas></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-head-bar"><div class="table-head-title">Year-by-Year Projection</div><button class="export-btn" onclick="exportCSV('lsTable','lumpsum')">⬇ Export</button></div>
+          <div class="table-scroll"><table><thead id="lsTHead"></thead><tbody id="lsTBody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: MULTI-PHASE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-multi">
+  <div class="calc-page-wrapper">
+    <div class="calc-page-header">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <h2>Multi-Phase Wealth Planner</h2>
+      <p>SIP accumulation → compounding pause → SWP retirement income · Full lifecycle simulation</p>
+    </div>
+    <div class="calc-layout wide">
+      <div>
+        <div class="calc-card" style="margin-bottom:1.25rem;">
+          <div class="calc-card-title">⚙️ Multi-Phase Parameters</div>
+          <div class="divider-label">Base Capital</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Initial Lump Sum (₹)</label><input type="number" id="m_lump_num" class="ifw-num" value="500000" step="50000"></div><input type="range" id="m_lump_r" min="0" max="10000000" value="500000" step="50000"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Expected CAGR (% p.a.)</label><input type="number" id="m_rate_num" class="ifw-num" value="12" step="0.5"></div><input type="range" id="m_rate_r" min="1" max="40" value="12" step="0.5"></div>
+          <div class="divider-label">Phase 1 — Active SIP</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Monthly SIP (₹)</label><input type="number" id="m_sip_num" class="ifw-num" value="10000" step="1000"></div><input type="range" id="m_sip_r" min="0" max="500000" value="10000" step="1000"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">SIP Duration (Years)</label><input type="number" id="m_sipY_num" class="ifw-num" value="10" step="1"></div><input type="range" id="m_sipY_r" min="0" max="30" value="10" step="1"></div>
+          <div class="divider-label">Phase 2 — Pause &amp; Compound</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Holding Duration (Years)</label><input type="number" id="m_pauseY_num" class="ifw-num" value="5" step="1"></div><input type="range" id="m_pauseY_r" min="0" max="30" value="5" step="1"></div>
+          <div class="divider-label">Phase 3 — SWP Income</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Monthly SWP (₹)</label><input type="number" id="m_swp_num" class="ifw-num" value="50000" step="5000"></div><input type="range" id="m_swp_r" min="0" max="1000000" value="50000" step="5000"></div>
+          <div class="input-field-wrap" style="margin-bottom:0.5rem;">
+            <label class="ifw-label" style="font-size:0.78rem;color:var(--text-muted);display:block;margin-bottom:6px;">Annual SWP Escalation Type</label>
+            <select class="select-f" id="m_stepType">
+              <option value="pct">Percentage Step-Up (% p.a.)</option>
+              <option value="amt">Fixed Amount Step-Up (₹ p.a.)</option>
+            </select>
+          </div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Escalation Value</label><input type="number" id="m_stepV_num" class="ifw-num" value="6" step="0.5"></div><input type="range" id="m_stepV_r" min="0" max="50000" value="6" step="0.5"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">SWP Duration (Years)</label><input type="number" id="m_swpY_num" class="ifw-num" value="15" step="1"></div><input type="range" id="m_swpY_r" min="0" max="40" value="15" step="1"></div>
+        </div>
+        <div class="inline-lead">
+          <h3>Plan Your Retirement</h3>
+          <p>These numbers are your blueprint. Let Rahul help you build this exact plan with the right mutual funds.</p>
+          <div id="mp-lead-wrap">
+            <div class="form-row-2">
+              <div class="fg"><label>Name</label><input type="text" id="mp_name" placeholder="Your name"></div>
+              <div class="fg"><label>Phone</label><input type="tel" id="mp_phone" placeholder="Mobile number"></div>
+            </div>
+            <div class="fg"><label>Current Age</label><select id="mp_age"><option value="" disabled selected>Select age range</option><option>25–30</option><option>31–35</option><option>36–40</option><option>41–45</option><option>46–50</option><option>50+</option></select></div>
+            <button class="btn-form" onclick="submitLead('mp-lead-wrap','mp-lead-ok',event,'MultiPhase Page')">Build My Plan →</button>
+            <p class="form-note">🔒 No spam. WhatsApp message within 24 hrs.</p>
+          </div>
+          <div class="form-success-box" id="mp-lead-ok"></div>
+        </div>
+      </div>
+      <div>
+        <div class="metrics-row">
+          <div class="metric-card mc-green"><div class="metric-label">Peak Corpus</div><div class="metric-val mv-green" id="mp_peak">₹0</div><div class="metric-sub">After accumulation</div></div>
+          <div class="metric-card mc-red"><div class="metric-label">Total SWP Paid</div><div class="metric-val" style="color:var(--danger)" id="mp_paid">₹0</div><div class="metric-sub" id="mp_paid_sub"></div></div>
+          <div class="metric-card mc-blue"><div class="metric-label">Terminal Balance</div><div class="metric-val mv-blue" id="mp_term">₹0</div><div class="metric-sub" id="mp_term_sub"></div></div>
+        </div>
+        <div class="alert-box" id="mp_alert"><span>⚠️</span><span id="mp_alert_txt"></span></div>
+        <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>Retirement Plan Analysis</h4></div><div class="ai-insights" id="mp-insights-list"></div></div>
+        <div class="chart-holder">
+          <div class="chart-holder-title">Multi-Phase Wealth Trajectory<div class="legend-row" id="mp_legend"></div></div>
+          <div class="chart-wrap"><canvas id="mpChart" role="img" aria-label="Multi phase wealth chart">Multi-phase chart</canvas></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-head-bar"><div class="table-head-title">Phase-by-Phase Projection</div><button class="export-btn" onclick="exportCSV('mpTable','multiphase')">⬇ Export</button></div>
+          <div class="table-scroll"><table><thead id="mpTHead"></thead><tbody id="mpTBody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: HOME LOAN -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-loan">
+  <div class="calc-page-wrapper">
+    <div class="calc-page-header">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <h2>Home Loan EMI Calculator</h2>
+      <p>Monthly EMI · Total interest outgo · Complete amortisation schedule</p>
+    </div>
+    <div class="calc-layout wide">
+      <div>
+        <div class="calc-card" style="margin-bottom:1.25rem;">
+          <div class="calc-card-title">⚙️ Loan Parameters</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Loan Amount (₹)</label><input type="number" id="hl_amt_num" class="ifw-num" value="5000000" step="100000"></div><input type="range" id="hl_amt_r" min="100000" max="50000000" value="5000000" step="100000"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Interest Rate (% p.a.)</label><input type="number" id="hl_rate_num" class="ifw-num" value="8.75" step="0.05"></div><input type="range" id="hl_rate_r" min="5" max="20" value="8.75" step="0.05"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Loan Tenure (Years)</label><input type="number" id="hl_yrs_num" class="ifw-num" value="20" step="1"></div><input type="range" id="hl_yrs_r" min="5" max="30" value="20" step="1"></div>
+        </div>
+        <div class="inline-lead">
+          <h3>Planning a Home Purchase?</h3>
+          <p>Rahul can help you compare home loan rates across banks and plan your purchase alongside your investment portfolio.</p>
+          <div id="hl-lead-wrap">
+            <div class="form-row-2">
+              <div class="fg"><label>Name</label><input type="text" id="hl_name" placeholder="Your name"></div>
+              <div class="fg"><label>Phone</label><input type="tel" id="hl_phone" placeholder="Mobile number"></div>
+            </div>
+            <div class="fg"><label>Property Budget</label><select id="hl_budget"><option value="" disabled selected>Select range</option><option>Under ₹50L</option><option>₹50L–₹1Cr</option><option>₹1Cr–₹2Cr</option><option>₹2Cr+</option></select></div>
+            <button class="btn-form" onclick="submitLead('hl-lead-wrap','hl-lead-ok',event,'HomeLoan Page')">Get Loan Guidance →</button>
+            <p class="form-note">🔒 No spam. Personal call within 24 hrs.</p>
+          </div>
+          <div class="form-success-box" id="hl-lead-ok"></div>
+        </div>
+      </div>
+      <div>
+        <div class="metrics-row">
+          <div class="metric-card mc-blue"><div class="metric-label">Monthly EMI</div><div class="metric-val mv-blue" id="hl_emi">₹0</div><div class="metric-sub" id="hl_emi_sub"></div></div>
+          <div class="metric-card mc-red"><div class="metric-label">Total Interest</div><div class="metric-val" style="color:var(--danger)" id="hl_int">₹0</div><div class="metric-sub" id="hl_int_sub"></div></div>
+          <div class="metric-card mc-amber"><div class="metric-label">Total Payable</div><div class="metric-val mv-amber" id="hl_tot">₹0</div><div class="metric-sub">Principal + interest</div></div>
+        </div>
+        <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>Loan Analysis</h4></div><div class="ai-insights" id="hl-insights-list"></div></div>
+        <div class="chart-holder">
+          <div class="chart-holder-title">Outstanding Balance Over Years</div>
+          <div class="chart-wrap"><canvas id="hlChart" role="img" aria-label="Home loan balance chart">Loan balance chart</canvas></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-head-bar"><div class="table-head-title">Amortisation Schedule</div><button class="export-btn" onclick="exportCSV('hlTable','homeloan')">⬇ Export</button></div>
+          <div class="table-scroll"><table><thead id="hlTHead"></thead><tbody id="hlTBody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PAGE: LOAN ELIGIBILITY -->
+<!-- ═══════════════════════════════════════ -->
+<div class="page" id="page-elig">
+  <div class="calc-page-wrapper">
+    <div class="calc-page-header">
+      <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+      <h2>Loan Eligibility Calculator</h2>
+      <p>Find your maximum eligible loan amount based on FOIR norms used by Indian banks</p>
+    </div>
+    <div class="calc-layout wide">
+      <div>
+        <div class="calc-card" style="margin-bottom:1.25rem;">
+          <div class="calc-card-title">⚙️ Eligibility Parameters</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Net Monthly Salary (₹)</label><input type="number" id="el_sal_num" class="ifw-num" value="100000" step="5000"></div><input type="range" id="el_sal_r" min="10000" max="2000000" value="100000" step="5000"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Lending Rate (% p.a.)</label><input type="number" id="el_rate_num" class="ifw-num" value="8.5" step="0.05"></div><input type="range" id="el_rate_r" min="5" max="20" value="8.5" step="0.05"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Desired Tenure (Years)</label><input type="number" id="el_yrs_num" class="ifw-num" value="20" step="1"></div><input type="range" id="el_yrs_r" min="5" max="30" value="20" step="1"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">FOIR Cap (%)</label><input type="number" id="el_foir_num" class="ifw-num" value="50" step="5"></div><input type="range" id="el_foir_r" min="30" max="70" value="50" step="5"></div>
+        </div>
+        <div class="inline-lead">
+          <h3>Check Your Real Eligibility</h3>
+          <p>This is a model estimate. Rahul can check your actual eligibility across 10+ banks and get you the best rate.</p>
+          <div id="el-lead-wrap">
+            <div class="form-row-2">
+              <div class="fg"><label>Name</label><input type="text" id="el_name" placeholder="Your name"></div>
+              <div class="fg"><label>Phone</label><input type="tel" id="el_phone" placeholder="Mobile number"></div>
+            </div>
+            <div class="fg"><label>Monthly Income</label><select id="el_inc"><option value="" disabled selected>Select range</option><option>₹25K–₹50K</option><option>₹50K–₹1L</option><option>₹1L–₹2L</option><option>₹2L+</option></select></div>
+            <button class="btn-form" onclick="submitLead('el-lead-wrap','el-lead-ok',event,'Eligibility Page')">Check My Eligibility →</button>
+            <p class="form-note">🔒 No spam. Call within 24 hrs.</p>
+          </div>
+          <div class="form-success-box" id="el-lead-ok"></div>
+        </div>
+      </div>
+      <div>
+        <div class="metrics-row">
+          <div class="metric-card mc-amber"><div class="metric-label">Max Allowed EMI</div><div class="metric-val mv-amber" id="el_emi">₹0</div><div class="metric-sub" id="el_emi_sub"></div></div>
+          <div class="metric-card mc-blue"><div class="metric-label">Rate Applied</div><div class="metric-val mv-blue" id="el_rate_v">0%</div><div class="metric-sub" id="el_rate_sub"></div></div>
+          <div class="metric-card mc-green"><div class="metric-label">Max Eligible Loan</div><div class="metric-val mv-green" id="el_loan">₹0</div><div class="metric-sub">FOIR-based estimate</div></div>
+        </div>
+        <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>Eligibility Analysis</h4></div><div class="ai-insights" id="el-insights-list"></div></div>
+        <div class="chart-holder">
+          <div class="chart-holder-title">Loan Amortisation at Max Eligibility</div>
+          <div class="chart-wrap"><canvas id="elChart" role="img" aria-label="Loan eligibility amortisation">Loan chart</canvas></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-head-bar"><div class="table-head-title">Projected Amortisation</div><button class="export-btn" onclick="exportCSV('elTable','eligibility')">⬇ Export</button></div>
+          <div class="table-scroll"><table><thead id="elTHead"></thead><tbody id="elTBody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="mainModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Book a Free Consultation</h3>
+    <p>Tell us a bit about yourself and Rahul will reach out within 24 hours.</p>
+    <div id="modal-form-wrap">
+      <div class="form-row-2">
+        <div class="fg"><label>Full Name</label><input type="text" id="mf_name" placeholder="Your name"></div>
+        <div class="fg"><label>Mobile</label><input type="tel" id="mf_phone" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+      <div class="fg"><label>I'm Interested In</label>
+        <select id="mf_goal">
+          <option value="" disabled selected>Select…</option>
+          <option>Start a SIP</option><option>Open Demat Account</option>
+          <option>Tax Saving (ELSS)</option><option>Retirement Planning</option>
+          <option>Child Education Planning</option><option>Review Existing Portfolio</option>
+          <option>Home Loan Guidance</option>
+        </select>
+      </div>
+      <div class="fg"><label>Monthly Income (Optional)</label>
+        <select id="mf_income">
+          <option value="" disabled selected>Select…</option>
+          <option>₹25K–₹50K</option><option>₹50K–₹1L</option><option>₹1L–₹2L</option><option>₹2L+</option>
+        </select>
+      </div>
+      <button class="btn-form" onclick="submitLead('modal-form-wrap','modal-ok',event,'Modal')">Request Free Consultation →</button>
+      <p class="form-note">🔒 We never spam. One call to understand your needs.</p>
+    </div>
+    <div class="form-success-box" id="modal-ok"></div>
+  </div>
+</div>
+
+<!-- FLOAT -->
+<button class="float-btn" onclick="openModal()">💬 Free Consultation</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-title">✅ We've got your details!</div>
+  <div>Expect a WhatsApp message within 24 hours.</div>
+</div>
+
+<script>
+/* ═══ UTILITY ═══ */
+const WHATSAPP_NUM = '919819590598';
+const TELEGRAM_TOKEN = 'YOUR_BOT_TOKEN';
+const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
+const SLACK_WEBHOOK = 'YOUR_SLACK_WEBHOOK';
+
+const charts = {};
+
+function fmt(v) {
+  if (isNaN(v) || v === null) return '—';
+  const n = Math.round(v);
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000)   return '₹' + (n/100000).toFixed(2) + ' L';
+  return '₹' + n.toLocaleString('en-IN');
+}
+function fmtShort(v) {
+  const n = Math.round(v);
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(1) + 'Cr';
+  if (n >= 100000)   return '₹' + (n/100000).toFixed(0) + 'L';
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+function gN(id) { const el = document.getElementById(id); return el ? (parseFloat(el.value)||0) : 0; }
+function gS(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+
+function syncSlider(numId, sliderId) {
+  const n = document.getElementById(numId), r = document.getElementById(sliderId);
+  if (!n || !r) return;
+  n.addEventListener('input', () => { r.value = n.value; triggerCalc(); });
+  r.addEventListener('input', () => { n.value = r.value; triggerCalc(); });
+}
+
+function makeChart(canvasId, config) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  if (charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart(ctx, config);
+}
+
+function chartColors(colors) {
+  const ctx = document.createElement('canvas').getContext('2d');
+  return colors.map(c => {
+    const g = ctx.createLinearGradient(0,0,0,300);
+    g.addColorStop(0, c+'30'); g.addColorStop(1, c+'04');
+    return g;
+  });
+}
+
+/* ═══ PAGE ROUTING ═══ */
+const pageMap = {
+  home: 'page-home', sip: 'page-sip', lumpsum: 'page-lumpsum',
+  multi: 'page-multi', loan: 'page-loan', elig: 'page-elig'
+};
+const navMap = {
+  home: 'nav-home', sip: 'nav-sip', multi: 'nav-multi', loan: 'nav-loan', elig: 'nav-elig'
+};
+
+function showPage(id) {
+  Object.values(pageMap).forEach(p => { const el = document.getElementById(p); if(el) el.classList.remove('active'); });
+  Object.values(navMap).forEach(n => { const el = document.getElementById(n); if(el) el.classList.remove('active'); });
+  const pg = document.getElementById(pageMap[id]);
+  if (pg) pg.classList.add('active');
+  const nav = document.getElementById(navMap[id]);
+  if (nav) nav.classList.add('active');
+  window.scrollTo(0,0);
+  setTimeout(triggerCalc, 100);
+}
+
+let currentPage = 'home';
+function triggerCalc() {
+  const active = document.querySelector('.page.active');
+  if (!active) return;
+  const id = active.id;
+  if (id === 'page-sip') calcSIP();
+  else if (id === 'page-lumpsum') calcLS();
+  else if (id === 'page-multi') calcMP();
+  else if (id === 'page-loan') calcHL();
+  else if (id === 'page-elig') calcEL();
+  else if (id === 'page-home') buildHeroChart();
+}
+
+/* ═══ LEAD / FORM ═══ */
+function openModal() { document.getElementById('mainModal').classList.add('open'); }
+function closeModal() { document.getElementById('mainModal').classList.remove('open'); }
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4500);
+}
+
+function sendToChannels(name, phone, source, extra) {
+  const msg = `🎯 *New Lead — Nidesh.com*\n\n👤 *Name:* ${name}\n📱 *Phone:* ${phone}\n📍 *Source:* ${source}\n${extra||''}\n🕐 *Time:* ${new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})}`;
+  if (TELEGRAM_TOKEN !== 'YOUR_BOT_TOKEN') {
+    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:msg,parse_mode:'Markdown'})}).catch(()=>{});
+  }
+  if (SLACK_WEBHOOK !== 'YOUR_SLACK_WEBHOOK') {
+    fetch(SLACK_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:msg})}).catch(()=>{});
+  }
+}
+
+function submitLead(wrapId, okId, e, source, extraFn) {
+  if (e) e.preventDefault();
+  // Find inputs in the form
+  const wrap = document.getElementById(wrapId);
+  const nameEl = wrap.querySelector('input[type="text"]');
+  const phoneEl = wrap.querySelector('input[type="tel"]');
+  const name = nameEl ? nameEl.value.trim() : '';
+  const phone = phoneEl ? phoneEl.value.trim() : '';
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+  sendToChannels(name, phone, source, '');
+
+  // Show success
+  document.getElementById(wrapId).style.display = 'none';
+  const ok = document.getElementById(okId);
+  ok.style.display = 'block';
+  ok.innerHTML = '<span class="big-tick">✅</span><strong style="color:var(--blue)">Received! We\'ll reach out soon.</strong><p style="font-size:0.82rem;color:var(--text-muted);margin-top:0.4rem">Expect a WhatsApp message from Rahul within 24 hours.</p>';
+
+  showToast();
+
+  // WhatsApp redirect after 1.5s
+  setTimeout(() => {
+    const waMsg = encodeURIComponent(`Hi Rahul! I used the ${source} on nidesh.com. My name is ${name} and I'd like to know more about investing.`);
+    window.open(`https://wa.me/${WHATSAPP_NUM}?text=${waMsg}`, '_blank');
+  }, 1500);
+}
+
+function submitBar() {
+  const name = document.getElementById('lbName').value.trim();
+  const phone = document.getElementById('lbPhone').value.trim();
+  if (!name || !phone) { alert('Please enter name and number.'); return; }
+  sendToChannels(name, phone, 'Lead Bar', '');
+  document.getElementById('lbName').value = '';
+  document.getElementById('lbPhone').value = '';
+  showToast();
+  const waMsg = encodeURIComponent(`Hi Rahul! I'd like a portfolio review. My name is ${name}.`);
+  setTimeout(() => window.open(`https://wa.me/${WHATSAPP_NUM}?text=${waMsg}`, '_blank'), 1500);
+}
+
+/* ═══ HERO CHART ═══ */
+function buildHeroChart() {
+  makeChart('heroChart', {
+    type:'line',
+    data:{
+      labels:['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'],
+      datasets:[{
+        data:[100000,108000,122000,138000,129000,148000,140000,192000,204000,256000,320000],
+        borderColor:'#2563EB', backgroundColor:'rgba(37,99,235,0.08)',
+        borderWidth:2.5, pointRadius:0, fill:true, tension:0.4
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{ticks:{color:'#94A3B8',font:{size:10}},grid:{display:false}},
+        y:{ticks:{color:'#94A3B8',font:{size:10},callback:v=>'₹'+(v/1000).toFixed(0)+'K'},grid:{color:'#F1F5F9'}}
+      }
+    }
+  });
+}
+
+/* ═══ AI INSIGHTS ═══ */
+function renderInsights(containerId, insights) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = insights.map(i => `
+    <div class="ai-insight">
+      <div class="ai-insight-icon">${i.icon}</div>
+      <div class="ai-insight-text">${i.text}</div>
+    </div>`).join('');
+}
+
+function getSIPInsights(sip, rate, years, invested, corpus) {
+  const mult = corpus / invested;
+  const insights = [];
+  if (rate < 10) insights.push({icon:'⚠️', text:`<strong>Rate assumption is conservative.</strong> At ${rate}% CAGR, your returns may trail inflation significantly. Consider equity mutual funds targeting 12–15% for long-term goals.`});
+  else if (rate >= 15) insights.push({icon:'🎯', text:`<strong>Ambitious return assumption (${rate}%).</strong> This is achievable with quality mid/small-cap funds over 10+ years, but expect year-to-year volatility. Diversify across 3–4 fund categories.`});
+  else insights.push({icon:'✅', text:`<strong>Healthy return assumption at ${rate}%.</strong> This aligns with historical large/flexi-cap mutual fund averages. You're planning realistically.`});
+
+  insights.push({icon:'📈', text:`<strong>Your money multiplies ${mult.toFixed(1)}x</strong> — investing ₹${(sip).toLocaleString('en-IN')}/mo for ${years} years grows to ${fmt(corpus)}. The power of compounding is at work here.`});
+
+  if (years < 7) insights.push({icon:'⏳', text:`<strong>Short tenure detected (${years} years).</strong> For equity mutual funds, the minimum recommended horizon is 5–7 years. Consider extending your tenure to reduce risk and maximise compounding.`});
+  else if (years >= 15) insights.push({icon:'🏆', text:`<strong>Excellent! ${years}-year horizon maximises compounding.</strong> Long tenures dramatically reduce risk in equity. Your wealth has space to weather market cycles.`});
+
+  if (sip < 5000) insights.push({icon:'💡', text:`<strong>Starting small is perfectly fine.</strong> ₹${sip.toLocaleString('en-IN')}/month is a great start. Use Step-Up SIP — increasing by even 10% annually can more than double your final corpus.`});
+
+  return insights;
+}
+
+function getLSInsights(lump, rate, years, corpus) {
+  const insights = [];
+  const mult = corpus / lump;
+  insights.push({icon:'💰', text:`<strong>Your ₹${fmt(lump)} investment grows ${mult.toFixed(1)}x</strong> to ${fmt(corpus)} in ${years} years at ${rate}% CAGR. This is the power of long-duration compounding.`});
+  if (rate < 8) insights.push({icon:'⚠️', text:`<strong>At ${rate}% CAGR, you may barely beat inflation.</strong> Indian CPI averages 5–6%. Consider equity-oriented mutual funds for higher real returns.`});
+  if (years >= 10 && rate >= 12) insights.push({icon:'🎯', text:`<strong>Optimal zone.</strong> Equity mutual funds over 10+ years have historically delivered 12–15% CAGR with manageable volatility. Your parameters match this sweet spot.`});
+  insights.push({icon:'📊', text:`<strong>Timing matters with lump sums.</strong> Consider STPs (Systematic Transfer Plans) if markets appear elevated — invest lump sum in a liquid fund and auto-transfer to equity monthly to average your cost.`});
+  return insights;
+}
+
+function getMPInsights(peak, paid, term, sipYears, pauseYears, swpYears, swp, depleted) {
+  const insights = [];
+  insights.push({icon:'🏗️', text:`<strong>Your wealth lifecycle:</strong> ${sipYears}yr SIP builds the base → ${pauseYears}yr compounding pause amplifies it to ${fmt(peak)} → then ${swpYears}yr SWP provides income.`});
+  if (depleted) insights.push({icon:'🚨', text:`<strong>Corpus depletion risk detected!</strong> Your SWP withdrawals exceed portfolio returns — the corpus gets eaten. Reduce SWP amount, reduce escalation rate, or extend the accumulation phase.`});
+  else if (term > 0) insights.push({icon:'✅', text:`<strong>Sustainable withdrawal plan.</strong> After ${swpYears} years of SWP, you still have ${fmt(term)} as terminal balance. This is a healthy retirement corpus design.`});
+  if (pauseYears > 0) insights.push({icon:'⏸️', text:`<strong>The pause phase is powerful.</strong> ${pauseYears} years of pure compounding (no withdrawals, no contributions) adds exponential value. Even 2 extra pause years can significantly boost your SWP capacity.`});
+  insights.push({icon:'📈', text:`<strong>Total income generated: ${fmt(paid)}</strong> across your SWP phase. Building this income stream from investments is the key to financial independence.`});
+  return insights;
+}
+
+function getHLInsights(loanAmt, rate, years, emi, totalInt) {
+  const insights = [];
+  const intRatio = totalInt / loanAmt;
+  insights.push({icon:'🏠', text:`<strong>Total cost of your home loan: ${fmt(loanAmt + totalInt)}.</strong> For a ₹${fmt(loanAmt)} loan, you pay back ${fmt(totalInt)} extra as interest — ${(intRatio*100).toFixed(0)}% of your original loan amount.`});
+  if (intRatio > 1.0) insights.push({icon:'⚠️', text:`<strong>You pay back over 2x the loan amount.</strong> At ${rate}% for ${years} years, interest costs are significant. Consider increasing EMI by 10-15% to close the loan 4–6 years early.`});
+  if (rate > 8.5) insights.push({icon:'💡', text:`<strong>Rate is above current market average (~8.5%).</strong> Even 0.5% reduction in rate saves lakhs over the tenure. Ask Rahul to compare rates across HDFC, SBI, Kotak, and Axis Bank.`});
+  insights.push({icon:'📊', text:`<strong>Tax benefit on home loan:</strong> Principal repayment (up to ₹1.5L) under 80C and interest (up to ₹2L) under Section 24 can save you ₹50,000–₹1L in taxes annually during early years.`});
+  return insights;
+}
+
+function getELInsights(sal, foir, maxLoan, maxEmi, rate, yrs) {
+  const insights = [];
+  insights.push({icon:'✅', text:`<strong>Max eligible loan: ${fmt(maxLoan)}.</strong> At ${foir}% FOIR on ₹${sal.toLocaleString('en-IN')}/mo salary with ${rate}% rate and ${yrs}-yr tenure, banks will lend you approximately this amount.`});
+  if (foir > 50) insights.push({icon:'⚠️', text:`<strong>FOIR above 50% is risky.</strong> Lenders get cautious above 50% FOIR as it leaves little buffer for other expenses. Consider a longer tenure to bring the EMI down.`});
+  insights.push({icon:'💡', text:`<strong>Increase eligibility by:</strong> (1) Adding a co-applicant's income, (2) Closing existing EMIs, (3) Increasing tenure, or (4) Negotiating a lower rate with a good CIBIL score (750+).`});
+  insights.push({icon:'📊', text:`<strong>CIBIL score is crucial.</strong> A score above 750 can get you 0.25–0.5% lower rate, saving ₹${Math.round(maxLoan * 0.003 * yrs / 1000)}K+ over the loan tenure. Check yours for free at CIBIL.com.`});
+  return insights;
+}
+
+/* ═══ SIP CALC ═══ */
+function calcSIP() {
+  const sip = gN('s_sip_num'), rate = gN('s_rate_num'), years = gN('s_yrs_num');
+  const mR = rate/12/100;
+  let corpus = 0, invested = 0, labels = [], corpData = [], invData = [], rows = '';
+  document.getElementById('sipTHead').innerHTML = '<tr><th>Year</th><th>Cumul. Invested</th><th>Interest Earned</th><th>Year-End Corpus</th></tr>';
+
+  for (let y = 1; y <= years; y++) {
+    let int = 0;
+    for (let m = 1; m <= 12; m++) {
+      corpus += sip; invested += sip;
+      const nx = corpus * (1+mR); int += nx - corpus; corpus = nx;
+    }
+    labels.push('Yr '+y); corpData.push(Math.round(corpus)); invData.push(Math.round(invested));
+    rows += `<tr><td><strong>Yr ${y}</strong></td><td>${fmt(invested)}</td><td style="color:#10B981;font-weight:600">${fmt(int)}</td><td><strong>${fmt(corpus)}</strong></td></tr>`;
+  }
+
+  document.getElementById('sip_inv').textContent = fmt(invested);
+  document.getElementById('sip_inv_sub').textContent = `₹${sip.toLocaleString('en-IN')}/mo × ${years}yr`;
+  document.getElementById('sip_ret').textContent = fmt(corpus - invested);
+  document.getElementById('sip_ret_sub').textContent = `${((corpus/invested-1)*100).toFixed(1)}% gain`;
+  document.getElementById('sip_corp').textContent = fmt(corpus);
+  document.getElementById('sip_corp_sub').textContent = `After ${years} years`;
+
+  document.getElementById('sipTBody').innerHTML = rows;
+  renderInsights('sip-insights-list', getSIPInsights(sip, rate, years, invested, corpus));
+
+  makeChart('sipChart', {
+    type:'line',
+    data:{labels, datasets:[
+      {label:'Invested',data:invData,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,0.08)',borderWidth:2,fill:true,tension:0.3,pointRadius:2},
+      {label:'Corpus',data:corpData,borderColor:'#2563EB',backgroundColor:'rgba(37,99,235,0.06)',borderWidth:2.5,fill:true,tension:0.3,pointRadius:2}
+    ]},
+    options:chartOpts(labels.length)
+  });
+}
+
+/* ═══ LUMP SUM CALC ═══ */
+function calcLS() {
+  const lump = gN('l_lump_num'), rate = gN('l_rate_num'), years = gN('l_yrs_num');
+  const r = rate/100;
+  let corpus = lump, labels = [], data = [], rows = '';
+  document.getElementById('lsTHead').innerHTML = '<tr><th>Year</th><th>Principal</th><th>Interest This Year</th><th>Year-End Value</th></tr>';
+
+  for (let y = 1; y <= years; y++) {
+    const start = corpus; corpus = start*(1+r); const int = corpus - start;
+    labels.push('Yr '+y); data.push(Math.round(corpus));
+    rows += `<tr><td><strong>Yr ${y}</strong></td><td>${fmt(lump)}</td><td style="color:#10B981;font-weight:600">${fmt(int)}</td><td><strong>${fmt(corpus)}</strong></td></tr>`;
+  }
+
+  document.getElementById('ls_inv').textContent = fmt(lump);
+  document.getElementById('ls_ret').textContent = fmt(corpus - lump);
+  document.getElementById('ls_ret_sub').textContent = `+${((corpus/lump-1)*100).toFixed(0)}% total gain`;
+  document.getElementById('ls_corp').textContent = fmt(corpus);
+  document.getElementById('ls_corp_sub').textContent = `After ${years} years`;
+
+  document.getElementById('lsTBody').innerHTML = rows;
+  renderInsights('ls-insights-list', getLSInsights(lump, rate, years, corpus));
+
+  makeChart('lsChart', {
+    type:'line',
+    data:{labels,datasets:[{label:'Portfolio Value',data,borderColor:'#2563EB',backgroundColor:'rgba(37,99,235,0.08)',borderWidth:2.5,fill:true,tension:0.4,pointRadius:2}]},
+    options:chartOpts(labels.length)
+  });
+}
+
+/* ═══ MULTI-PHASE CALC ═══ */
+function calcMP() {
+  const lump = gN('m_lump_num'), rate = gN('m_rate_num');
+  const sip = gN('m_sip_num'), ySIP = gN('m_sipY_num'), yPause = gN('m_pauseY_num');
+  const initSwp = gN('m_swp_num'), stepType = gS('m_stepType'), stepVal = gN('m_stepV_num'), ySWP = gN('m_swpY_num');
+  const mR = rate/12/100, total = ySIP + yPause + ySWP;
+
+  document.getElementById('mpTHead').innerHTML = '<tr><th>Year</th><th>Phase</th><th>Interest</th><th>SWP</th><th>Net CF</th><th>Corpus</th></tr>';
+
+  let corpus = lump, peak = lump, paid = 0, deplYr = null, activeSwp = initSwp;
+  let labels = [], data = [], rows = '';
+
+  for (let y = 1; y <= total; y++) {
+    if (y > ySIP + yPause + 1) activeSwp = stepType === 'pct' ? activeSwp*(1+stepVal/100) : activeSwp + stepVal;
+    let phase='', pill='', cashflow=0, yearStart=corpus, swpYear=0, intYear=0, tempC=corpus;
+
+    for (let m = 1; m <= 12; m++) {
+      if (y <= ySIP) { tempC += sip; cashflow += sip; tempC *= (1+mR); phase='Active Accumulation'; pill='pill-invest'; }
+      else if (y <= ySIP+yPause) { tempC *= (1+mR); phase='Compounding Pause'; pill='pill-pause'; }
+      else {
+        if (tempC > 0) { const p = Math.min(tempC, activeSwp); tempC -= p; cashflow -= p; swpYear += p; paid += p; tempC *= (1+mR); }
+        phase='SWP Drawdown'; pill='pill-swp';
+      }
+    }
+    corpus = tempC;
+    if (y <= ySIP+yPause) peak = Math.max(peak, corpus);
+    intYear = Math.max(0, corpus - yearStart - cashflow);
+    labels.push('Yr '+y); data.push(Math.round(corpus));
+
+    let isDepl = false;
+    if (y > ySIP+yPause && swpYear > 0 && swpYear > intYear && deplYr === null) { deplYr = y; isDepl = true; pill = 'pill-swp-warn'; }
+    const isDepleted = yearStart > 0 && corpus < 1;
+    if (isDepleted) { phase='Corpus Depleted'; pill='pill-depleted'; }
+
+    rows += `<tr class="${isDepl?'row-warn':isDepleted?'row-depleted':''}">
+      <td><strong>Yr ${y}</strong></td>
+      <td><span class="pill ${pill}">${phase}</span></td>
+      <td style="color:#10B981;font-weight:600">${intYear>0?fmt(intYear):'—'}</td>
+      <td style="color:${swpYear>0?'#EF4444':'#94A3B8'};font-weight:600">${swpYear>0?fmt(swpYear):'—'}</td>
+      <td style="color:${cashflow>=0?'#10B981':'#EF4444'};font-weight:600">${cashflow!==0?fmt(cashflow):'—'}</td>
+      <td><strong>${fmt(corpus)}</strong>${isDepl?'<span class="depl-flag">⚠ Eating Capital</span>':''}</td>
+    </tr>`;
+  }
+
+  document.getElementById('mp_peak').textContent = fmt(peak);
+  document.getElementById('mp_paid').textContent = fmt(paid);
+  document.getElementById('mp_paid_sub').textContent = `Over ${ySWP} years`;
+  document.getElementById('mp_term').textContent = fmt(corpus);
+  document.getElementById('mp_term_sub').textContent = corpus < 1 ? '⚠️ Corpus depleted' : 'Residual balance';
+
+  const al = document.getElementById('mp_alert');
+  if (deplYr) {
+    document.getElementById('mp_alert_txt').textContent = `Year ${deplYr}: SWP withdrawals exceed interest earned — corpus erosion begins. Reduce SWP or extend accumulation phase.`;
+    al.classList.add('show');
+  } else { al.classList.remove('show'); }
+
+  renderInsights('mp-insights-list', getMPInsights(peak, paid, corpus, ySIP, yPause, ySWP, initSwp, corpus < 1));
+  document.getElementById('mpTBody').innerHTML = rows;
+
+  const datasets = [{label:'Corpus Value',data,borderColor:'#2563EB',backgroundColor:'rgba(37,99,235,0.08)',borderWidth:2.5,fill:true,tension:0.3,pointRadius:1}];
+  if (deplYr) {
+    const dep = Array(total).fill(null); dep[deplYr-1] = data[deplYr-1];
+    datasets.push({label:'⚠ Depletion Start',data:dep,borderColor:'#EF4444',borderWidth:0,backgroundColor:'transparent',fill:false,pointRadius:8,pointBackgroundColor:'#EF4444',pointStyle:'triangle'});
+  }
+  document.getElementById('mp_legend').innerHTML = datasets.map(d=>`<div class="legend-item"><div class="legend-dot" style="background:${d.borderColor||d.pointBackgroundColor}"></div>${d.label}</div>`).join('');
+  makeChart('mpChart', {type:'line',data:{labels,datasets},options:chartOpts(labels.length)});
+}
+
+/* ═══ HOME LOAN CALC ═══ */
+function calcHL() {
+  const P = gN('hl_amt_num'), ar = gN('hl_rate_num'), yrs = gN('hl_yrs_num');
+  const mR = (ar/12)/100, n = yrs*12;
+  const emi = (P * mR * Math.pow(1+mR,n)) / (Math.pow(1+mR,n)-1);
+  let balance = P, totalInt = 0, labels = [], data = [], rows = '';
+  document.getElementById('hlTHead').innerHTML = '<tr><th>Year</th><th>Annual EMI</th><th>Principal Paid</th><th>Interest Paid</th><th>Balance</th></tr>';
+
+  for (let y = 1; y <= yrs; y++) {
+    let pP=0, iP=0;
+    for (let m = 1; m <= 12; m++) { const im=balance*mR, pm=emi-im; iP+=im; pP+=pm; balance-=pm; if(balance<0)balance=0; }
+    totalInt += iP;
+    labels.push('Yr '+y); data.push(Math.round(balance));
+    rows += `<tr><td><strong>Yr ${y}</strong></td><td>${fmt(emi*12)}</td><td style="color:#10B981;font-weight:600">${fmt(pP)}</td><td style="color:#EF4444;font-weight:600">${fmt(iP)}</td><td><strong>${fmt(balance)}</strong></td></tr>`;
+  }
+
+  document.getElementById('hl_emi').textContent = fmt(emi);
+  document.getElementById('hl_emi_sub').textContent = `For ${yrs}-year loan`;
+  document.getElementById('hl_int').textContent = fmt(totalInt);
+  document.getElementById('hl_int_sub').textContent = `${(totalInt/P*100).toFixed(0)}% of principal`;
+  document.getElementById('hl_tot').textContent = fmt(P + totalInt);
+
+  renderInsights('hl-insights-list', getHLInsights(P, ar, yrs, emi, totalInt));
+  document.getElementById('hlTBody').innerHTML = rows;
+
+  makeChart('hlChart', {type:'line',data:{labels,datasets:[{label:'Outstanding Balance',data,borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,0.07)',borderWidth:2.5,fill:true,tension:0.3,pointRadius:2}]},options:chartOpts(yrs)});
+}
+
+/* ═══ ELIGIBILITY CALC ═══ */
+function calcEL() {
+  const sal = gN('el_sal_num'), lr = gN('el_rate_num'), yrs = gN('el_yrs_num'), foir = gN('el_foir_num');
+  const maxEmi = sal * (foir/100);
+  const mR = (lr/12)/100, n = yrs*12;
+  const maxLoan = (maxEmi * (Math.pow(1+mR,n)-1)) / (mR * Math.pow(1+mR,n));
+  let balance = maxLoan, labels = [], data = [], rows = '';
+  document.getElementById('elTHead').innerHTML = '<tr><th>Year</th><th>Max EMI</th><th>Principal Paid</th><th>Interest Paid</th><th>Balance</th></tr>';
+
+  for (let y = 1; y <= yrs; y++) {
+    let pP=0, iP=0;
+    for (let m = 1; m <= 12; m++) { const im=balance*mR, pm=maxEmi-im; iP+=im; pP+=pm; balance-=pm; if(balance<0)balance=0; }
+    labels.push('Yr '+y); data.push(Math.round(balance));
+    rows += `<tr><td><strong>Yr ${y}</strong></td><td>${fmt(maxEmi)}</td><td style="color:#10B981;font-weight:600">${fmt(pP)}</td><td style="color:#F59E0B;font-weight:600">${fmt(iP)}</td><td><strong>${fmt(balance)}</strong></td></tr>`;
+  }
+
+  document.getElementById('el_emi').textContent = fmt(maxEmi);
+  document.getElementById('el_emi_sub').textContent = `${foir}% of salary`;
+  document.getElementById('el_rate_v').textContent = lr + '% p.a.';
+  document.getElementById('el_rate_sub').textContent = `${yrs}-year tenure`;
+  document.getElementById('el_loan').textContent = fmt(maxLoan);
+
+  renderInsights('el-insights-list', getELInsights(sal, foir, maxLoan, maxEmi, lr, yrs));
+  document.getElementById('elTBody').innerHTML = rows;
+  makeChart('elChart', {type:'line',data:{labels,datasets:[{label:'Balance Remaining',data,borderColor:'#F59E0B',backgroundColor:'rgba(245,158,11,0.07)',borderWidth:2.5,fill:true,tension:0.3,pointRadius:2}]},options:chartOpts(yrs)});
+}
+
+/* ═══ CHART OPTIONS ═══ */
+function chartOpts(n) {
+  return {
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#fff', borderColor:'#DBEAFE', borderWidth:1,
+        titleColor:'#0F172A', bodyColor:'#334155', padding:12,
+        callbacks:{label:c=>{
+          const v=c.parsed.y; if(v===null)return null;
+          if(v>=10000000)return ` ₹${(v/10000000).toFixed(2)}Cr`;
+          if(v>=100000)return ` ₹${(v/100000).toFixed(2)}L`;
+          return ` ₹${Math.round(v).toLocaleString('en-IN')}`;
+        }}
+      }
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{color:'#94A3B8',font:{size:11},maxTicksLimit:n>20?12:n}},
+      y:{grid:{color:'#F1F8FF'},ticks:{color:'#94A3B8',font:{size:11},callback:v=>{
+        if(v>=10000000)return '₹'+(v/10000000).toFixed(1)+'Cr';
+        if(v>=100000)return '₹'+(v/100000).toFixed(0)+'L';
+        return '₹'+v.toLocaleString('en-IN');
+      }}}
+    }
+  };
+}
+
+/* ═══ EXPORT CSV ═══ */
+function exportCSV(tableIdPrefix, mode) {
+  const thead = document.getElementById(tableIdPrefix.replace('Table','THead'));
+  const tbody = document.getElementById(tableIdPrefix.replace('Table','TBody'));
+  const heads = [...thead.querySelectorAll('th')].map(th=>`"${th.innerText.trim()}"`);
+  const dataRows = [...tbody.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('td')].map(td=>`"${td.innerText.replace(/[₹,]/g,'').trim()}"`).join(','));
+  const csv = [heads.join(','),...dataRows].join('\n');
+  const a = document.createElement('a'); a.download = `nidesh_${mode}.csv`;
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.click();
+}
+
+/* ═══ WIRE UP ALL SLIDERS ═══ */
+function wireAll() {
+  // SIP
+  [['s_sip','s_sip_r'],['s_rate','s_rate_r'],['s_yrs','s_yrs_r']].forEach(([n,r])=>{
+    const ne = document.getElementById(n+'_num'), re = document.getElementById(r);
+    if(!ne||!re)return;
+    ne.addEventListener('input',()=>{re.value=ne.value;calcSIP();});
+    re.addEventListener('input',()=>{ne.value=re.value;calcSIP();});
+  });
+  // Lump Sum
+  [['l_lump','l_lump_r'],['l_rate','l_rate_r'],['l_yrs','l_yrs_r']].forEach(([n,r])=>{
+    const ne=document.getElementById(n+'_num'),re=document.getElementById(r);
+    if(!ne||!re)return;
+    ne.addEventListener('input',()=>{re.value=ne.value;calcLS();});
+    re.addEventListener('input',()=>{ne.value=re.value;calcLS();});
+  });
+  // Multi
+  ['m_lump','m_rate','m_sip','m_sipY','m_pauseY','m_swp','m_stepV','m_swpY'].forEach(n=>{
+    const ne=document.getElementById(n+'_num'),re=document.getElementById(n+'_r');
+    if(!ne||!re)return;
+    ne.addEventListener('input',()=>{re.value=ne.value;calcMP();});
+    re.addEventListener('input',()=>{ne.value=re.value;calcMP();});
+  });
+  document.getElementById('m_stepType')?.addEventListener('change',calcMP);
+  // Home Loan
+  [['hl_amt','hl_amt_r'],['hl_rate','hl_rate_r'],['hl_yrs','hl_yrs_r']].forEach(([n,r])=>{
+    const ne=document.getElementById(n+'_num'),re=document.getElementById(r);
+    if(!ne||!re)return;
+    ne.addEventListener('input',()=>{re.value=ne.value;calcHL();});
+    re.addEventListener('input',()=>{ne.value=re.value;calcHL();});
+  });
+  // Eligibility
+  [['el_sal','el_sal_r'],['el_rate','el_rate_r'],['el_yrs','el_yrs_r'],['el_foir','el_foir_r']].forEach(([n,r])=>{
+    const ne=document.getElementById(n+'_num'),re=document.getElementById(r);
+    if(!ne||!re)return;
+    ne.addEventListener('input',()=>{re.value=ne.value;calcEL();});
+    re.addEventListener('input',()=>{ne.value=re.value;calcEL();});
+  });
+}
+
+window.onload = () => {
+  wireAll();
+  buildHeroChart();
+};
+</script>
+</body>
+</html>
