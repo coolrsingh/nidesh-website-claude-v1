@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nidesh Financial Services — Mutual Fund Advisor in Kalyan, Thane & Mumbai</title>
+<meta name="description" content="AMFI-registered mutual fund distributor in Kalyan. Free SIP, lump sum, EMI and eligibility calculators, plus expert advisory for Thane & Mumbai.">
+<link rel="canonical" href="https://nidesh.com/">
+<meta property="og:title" content="Nidesh Financial Services — Mutual Fund Advisor in Kalyan, Thane & Mumbai">
+<meta property="og:description" content="AMFI-registered mutual fund distributor in Kalyan. Free SIP, lump sum, EMI and eligibility calculators, plus expert advisory for Thane & Mumbai.">
+<meta property="og:url" content="https://nidesh.com/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">💎</div>
+    <div>Nidesh Financial<span>SEBI Reg. MFD · Kalyan · Thane · Mumbai</span></div>
+  </a>
+  <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="/" class="nav-link active">Home</a>
+    <div class="nav-dropdown">
+      <button class="nav-link" onclick="toggleDrop(this)">Calculators ▾</button>
+      <div class="nav-drop-menu">
+        <a href="/sip-calculator/" class="">📈 SIP Calculator</a>
+        <a href="/lumpsum-calculator/" class="">💰 Lump Sum Calculator</a>
+        <a href="/multi-phase-wealth-planner/" class="">🚀 Multi-Phase Wealth Planner</a>
+        <a href="/home-loan-emi-calculator/" class="">🏠 Home Loan EMI Calculator</a>
+        <a href="/loan-eligibility-calculator/" class="">✅ Loan Eligibility Calculator</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <button class="nav-link" onclick="toggleDrop(this)">Locations ▾</button>
+      <div class="nav-drop-menu">
+        <a href="/mutual-fund-advisor-kalyan/" class="">📍 Mutual Fund Advisor in Kalyan</a>
+        <a href="/mutual-fund-advisor-dombivali/" class="">📍 Mutual Fund Advisor in Dombivali</a>
+        <a href="/financial-advisor-mumbai/" class="">📍 Financial Advisor in Mumbai</a>
+      </div>
+    </div>
+    <button class="nav-link nav-cta" onclick="openModal()">Free Consult</button>
+  </div>
+</nav>
+<section class="hero"><div class="hero-grid">
+  <div>
+    <div class="hero-badge">AMFI Registered MFD &middot; Kalyan &middot; Since 2016</div>
+    <h1 class="hero-title">Invest with clarity. <em>Grow</em> with confidence.</h1>
+    <p class="hero-sub">Personalised mutual fund guidance for families and professionals across Kalyan, Thane and Mumbai. Start a SIP, save tax, plan retirement &mdash; with a real advisor, not an algorithm.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal()">Book a Free Consultation</button>
+      <a class="btn-outline" href="/sip-calculator/">Try the SIP Calculator</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">&#8377;60L+</div><div class="hstat-label">Assets Advised</div></div>
+      <div class="hstat"><div class="hstat-num">200+</div><div class="hstat-label">Families Guided</div></div>
+      <div class="hstat"><div class="hstat-num">8+ yrs</div><div class="hstat-label">Experience</div></div>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="hero-card-header"><div><div class="hero-card-title">SIP Growth Preview</div><div class="hero-card-val">&#8377;10,000/mo</div></div><div class="hero-card-chg">12% CAGR</div></div>
+    <div class="chart-wrap" style="height:180px;"><canvas id="heroChart" role="img" aria-label="Illustrative SIP growth"></canvas></div>
+    <div class="hero-mini-grid">
+      <div class="hmini"><div class="hmini-label">15-Yr Corpus</div><div class="hmini-val">&#8377;50L+</div><div class="hmini-sub">illustrative</div></div>
+      <div class="hmini"><div class="hmini-label">Invested</div><div class="hmini-val">&#8377;18L</div><div class="hmini-sub">&#8377;10k &times; 180</div></div>
+    </div>
+  </div>
+</div></section>
+<section class="calc-nav-section" style="padding-top:2rem;padding-bottom:2rem;">
+  <div class="lead-bar">
+    <div class="lead-bar-text"><h3>Get a free portfolio review</h3><p>Leave your details &mdash; Rahul will WhatsApp you within 24 hours.</p></div>
+    <div class="lead-bar-form">
+      <input type="text" id="lbName" placeholder="Your name">
+      <input type="tel" id="lbPhone" placeholder="Mobile number">
+      <button class="btn-primary" onclick="submitBar()">Request Review &rarr;</button>
+    </div>
+  </div>
+</section>
+<section class="calc-nav-section">
+  <div style="max-width:1300px;margin:0 auto;">
+    <div class="section-label">Free Financial Tools</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--navy);margin-bottom:1.75rem;">Plan Every Money Decision</h2>
+    <div class="calc-cards-grid">
+        <a class="calc-nav-card" href="/sip-calculator/">
+          <div class="calc-icon-wrap">📈</div>
+          <h3>SIP Calculator</h3>
+          <p>See how much wealth your monthly SIP can build with year-by-year compound growth.</p>
+          <div class="card-arrow">Open Calculator &rarr;</div>
+        </a>
+        <a class="calc-nav-card" href="/lumpsum-calculator/">
+          <div class="calc-icon-wrap">💰</div>
+          <h3>Lump Sum Calculator</h3>
+          <p>Project how a one-time investment grows at different CAGR scenarios over 1–40 years.</p>
+          <div class="card-arrow">Open Calculator &rarr;</div>
+        </a>
+        <a class="calc-nav-card" href="/multi-phase-wealth-planner/">
+          <div class="calc-icon-wrap">🚀</div>
+          <h3>Multi-Phase Wealth Planner</h3>
+          <p>Model your full lifecycle — SIP accumulation, compounding pause and SWP retirement income.</p>
+          <div class="card-arrow">Open Calculator &rarr;</div>
+        </a>
+        <a class="calc-nav-card" href="/home-loan-emi-calculator/">
+          <div class="calc-icon-wrap">🏠</div>
+          <h3>Home Loan EMI Calculator</h3>
+          <p>Know your exact EMI, total interest and the real cost of your home loan.</p>
+          <div class="card-arrow">Open Calculator &rarr;</div>
+        </a>
+        <a class="calc-nav-card" href="/loan-eligibility-calculator/">
+          <div class="calc-icon-wrap">✅</div>
+          <h3>Loan Eligibility Calculator</h3>
+          <p>Find the maximum home loan you qualify for based on income and FOIR norms.</p>
+          <div class="card-arrow">Open Calculator &rarr;</div>
+        </a></div>
+  </div>
+</section>
+<section class="services-section">
+  <div style="max-width:1200px;margin:0 auto 1.75rem;"><div class="section-label">What We Do</div><h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--navy);">Advisory Services</h2></div>
+  <div class="services-grid">
+    <div class="svc-card"><div class="svc-num">01</div><h3>SIP Planning</h3><p>Build a disciplined monthly investing habit sized to your goals and income.</p></div>
+    <div class="svc-card"><div class="svc-num">02</div><h3>Mutual Fund Advisory</h3><p>A curated, regularly reviewed portfolio across equity, debt and hybrid funds.</p></div>
+    <div class="svc-card"><div class="svc-num">03</div><h3>ELSS Tax Saving</h3><p>Cut your tax bill while staying invested in equity for the long term.</p></div>
+    <div class="svc-card"><div class="svc-num">04</div><h3>Demat Account Opening</h3><p>Quick, guided setup so you can start investing without the paperwork.</p></div>
+    <div class="svc-card"><div class="svc-num">05</div><h3>Retirement Planning</h3><p>Turn today's savings into a reliable future income with SIP and SWP strategies.</p></div>
+    <div class="svc-card"><div class="svc-num">06</div><h3>Goal-Based Planning</h3><p>Map education, home and independence goals onto one clear timeline.</p></div>
+  </div>
+</section>
+<section class="contact-section"><div class="contact-inner">
+  <div class="contact-text"><h3>Ready to start?</h3><p>Talk to Rahul &mdash; AMFI-registered, based in Kalyan, serving Thane &amp; Mumbai.</p></div>
+  <div class="contact-links">
+    <a class="contact-link" href="https://wa.me/919819590598" target="_blank" rel="noopener">&#128172; WhatsApp</a>
+    <a class="contact-link" href="tel:+919819590598">&#128222; +91 98195 90598</a>
+    <a class="contact-link" href="mailto:investments.nidesh@outlook.com">&#9993;&#65039; Email</a>
+  </div>
+</div></section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-brand"><span>💎</span> Nidesh Financial</div>
+        <p>AMFI Registered Mutual Fund Distributor based in Kalyan, serving Thane &amp; Mumbai since 2016.</p>
+        <p>Mon–Sat · 9 AM – 8 PM</p>
+        <p><a href="tel:+919819590598">📞 +91 98195 90598</a></p>
+        <p><a href="https://wa.me/919819590598" target="_blank" rel="noopener">💬 WhatsApp Us</a></p>
+        <p><a href="mailto:investments.nidesh@outlook.com">✉️ investments.nidesh@outlook.com</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>Free Calculators</h4>
+        <a href="/sip-calculator/">SIP Calculator</a>
+      <a href="/lumpsum-calculator/">Lump Sum Calculator</a>
+      <a href="/multi-phase-wealth-planner/">Multi-Phase Wealth Planner</a>
+      <a href="/home-loan-emi-calculator/">Home Loan EMI Calculator</a>
+      <a href="/loan-eligibility-calculator/">Loan Eligibility Calculator</a>
+      </div>
+      <div class="footer-col">
+        <h4>Service Areas</h4>
+        <a href="/mutual-fund-advisor-kalyan/">Mutual Fund Advisor in Kalyan</a>
+      <a href="/mutual-fund-advisor-dombivali/">Mutual Fund Advisor in Dombivali</a>
+      <a href="/financial-advisor-mumbai/">Financial Advisor in Mumbai</a>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <p>© 2025 Nidesh Financial Services · Kalyan, Maharashtra · AMFI Registered MFD</p>
+      <p>Mutual fund investments are subject to market risks. Past performance is not indicative of future returns. All projections are illustrative only. This is not financial advice.</p>
+    </div>
+  </div>
+</footer>
+<!-- MODAL -->
+<div class="modal-overlay" id="mainModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Book a Free Consultation</h3>
+    <p>Tell us a bit about yourself and Rahul will reach out within 24 hours.</p>
+    <div id="modal-form-wrap">
+      <div class="form-row-2">
+        <div class="fg"><label>Full Name</label><input type="text" id="mf_name" placeholder="Your name"></div>
+        <div class="fg"><label>Mobile</label><input type="tel" id="mf_phone" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+      <div class="fg"><label>I'm Interested In</label>
+        <select id="mf_goal">
+          <option value="" disabled selected>Select…</option>
+          <option>Start a SIP</option><option>Open Demat Account</option>
+          <option>Tax Saving (ELSS)</option><option>Retirement Planning</option>
+          <option>Child Education Planning</option><option>Review Existing Portfolio</option>
+          <option>Home Loan Guidance</option>
+        </select>
+      </div>
+      <div class="fg"><label>Monthly Income (Optional)</label>
+        <select id="mf_income">
+          <option value="" disabled selected>Select…</option>
+          <option>₹25K–₹50K</option><option>₹50K–₹1L</option><option>₹1L–₹2L</option><option>₹2L+</option>
+        </select>
+      </div>
+      <button class="btn-form" onclick="submitLead('modal-form-wrap','modal-ok',event,'Modal')">Request Free Consultation →</button>
+      <p class="form-note">🔒 We never spam. One call to understand your needs.</p>
+    </div>
+    <div class="form-success-box" id="modal-ok"></div>
+  </div>
+</div>
+
+<!-- FLOAT -->
+<button class="float-btn" onclick="openModal()">💬 Free Consultation</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-title">✅ We've got your details!</div>
+  <div>Expect a WhatsApp message within 24 hours.</div>
+</div>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FinancialService", "name": "Nidesh Financial Services", "description": "AMFI-registered mutual fund distributor offering SIP planning, mutual fund advisory, ELSS tax saving, demat support and retirement planning.", "url": "https://nidesh.com/", "telephone": "+91-98195-90598", "email": "investments.nidesh@outlook.com", "areaServed": "Kalyan, Thane, Mumbai", "address": {"@type": "PostalAddress", "addressLocality": "Kalyan", "addressRegion": "Maharashtra", "addressCountry": "IN"}, "founder": {"@type": "Person", "name": "Rahul"}, "foundingDate": "2016"}</script>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var labels=[],data=[],v=100000;
+  for(var y=0;y<=15;y++){ labels.push('Yr '+y); data.push(Math.round(v)); v=v*1.12+120000; }
+  makeChart('heroChart',{type:'line',data:{labels:labels,datasets:[
+    {label:'Corpus',data:data,borderColor:'#2563EB',backgroundColor:chartColors(['#2563EB'])[0],fill:true,tension:.35,borderWidth:2,pointRadius:0}
+  ]},options:chartOpts(15)});
+});
+</script>
+</body></html>
