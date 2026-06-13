@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Phase Wealth Planner — SIP + SWP Retirement | Nidesh</title>
+<meta name="description" content="Model your full money lifecycle: SIP accumulation, a compounding pause, then SWP retirement income. Free planner with expert help in Kalyan.">
+<link rel="canonical" href="https://nidesh.com/multi-phase-wealth-planner/">
+<meta property="og:title" content="Multi-Phase Wealth Planner — SIP + SWP Retirement | Nidesh">
+<meta property="og:description" content="Model your full money lifecycle: SIP accumulation, a compounding pause, then SWP retirement income. Free planner with expert help in Kalyan.">
+<meta property="og:url" content="https://nidesh.com/multi-phase-wealth-planner/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">💎</div>
+    <div>Nidesh Financial<span>SEBI Reg. MFD · Kalyan · Thane · Mumbai</span></div>
+  </a>
+  <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="/" class="nav-link">Home</a>
+    <div class="nav-dropdown">
+      <button class="nav-link active" onclick="toggleDrop(this)">Calculators ▾</button>
+      <div class="nav-drop-menu">
+        <a href="/sip-calculator/" class="">📈 SIP Calculator</a>
+        <a href="/lumpsum-calculator/" class="">💰 Lump Sum Calculator</a>
+        <a href="/multi-phase-wealth-planner/" class="active">🚀 Multi-Phase Wealth Planner</a>
+        <a href="/home-loan-emi-calculator/" class="">🏠 Home Loan EMI Calculator</a>
+        <a href="/loan-eligibility-calculator/" class="">✅ Loan Eligibility Calculator</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <button class="nav-link" onclick="toggleDrop(this)">Locations ▾</button>
+      <div class="nav-drop-menu">
+        <a href="/mutual-fund-advisor-kalyan/" class="">📍 Mutual Fund Advisor in Kalyan</a>
+        <a href="/mutual-fund-advisor-dombivali/" class="">📍 Mutual Fund Advisor in Dombivali</a>
+        <a href="/financial-advisor-mumbai/" class="">📍 Financial Advisor in Mumbai</a>
+      </div>
+    </div>
+    <button class="nav-link nav-cta" onclick="openModal()">Free Consult</button>
+  </div>
+</nav>
+<main class="calc-page-wrapper">
+  <div class="calc-page-header">
+    <div class="breadcrumb"><a href="/">Home</a><span>/</span>Multi-Phase Wealth Planner</div>
+    <h1>Multi-Phase Wealth Planner: From <em>SIP</em> to Retirement Income</h1>
+    <p>Model accumulation, a compounding hold, and a withdrawal (SWP) phase in one plan.</p>
+  </div>
+
+    <div class="calc-layout wide">
+      <div>
+        <div class="calc-card" style="margin-bottom:1.25rem;">
+          <div class="calc-card-title">⚙️ Multi-Phase Parameters</div>
+          <div class="divider-label">Base Capital</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Initial Lump Sum (₹)</label><input type="number" id="m_lump_num" class="ifw-num" value="500000" step="50000"></div><input type="range" id="m_lump_r" min="0" max="10000000" value="500000" step="50000"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Expected CAGR (% p.a.)</label><input type="number" id="m_rate_num" class="ifw-num" value="12" step="0.5"></div><input type="range" id="m_rate_r" min="1" max="40" value="12" step="0.5"></div>
+          <div class="divider-label">Phase 1 — Active SIP</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Monthly SIP (₹)</label><input type="number" id="m_sip_num" class="ifw-num" value="10000" step="1000"></div><input type="range" id="m_sip_r" min="0" max="500000" value="10000" step="1000"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">SIP Duration (Years)</label><input type="number" id="m_sipY_num" class="ifw-num" value="10" step="1"></div><input type="range" id="m_sipY_r" min="0" max="30" value="10" step="1"></div>
+          <div class="divider-label">Phase 2 — Pause &amp; Compound</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Holding Duration (Years)</label><input type="number" id="m_pauseY_num" class="ifw-num" value="5" step="1"></div><input type="range" id="m_pauseY_r" min="0" max="30" value="5" step="1"></div>
+          <div class="divider-label">Phase 3 — SWP Income</div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Monthly SWP (₹)</label><input type="number" id="m_swp_num" class="ifw-num" value="50000" step="5000"></div><input type="range" id="m_swp_r" min="0" max="1000000" value="50000" step="5000"></div>
+          <div class="input-field-wrap" style="margin-bottom:0.5rem;">
+            <label class="ifw-label" style="font-size:0.78rem;color:var(--text-muted);display:block;margin-bottom:6px;">Annual SWP Escalation Type</label>
+            <select class="select-f" id="m_stepType">
+              <option value="pct">Percentage Step-Up (% p.a.)</option>
+              <option value="amt">Fixed Amount Step-Up (₹ p.a.)</option>
+            </select>
+          </div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">Escalation Value</label><input type="number" id="m_stepV_num" class="ifw-num" value="6" step="0.5"></div><input type="range" id="m_stepV_r" min="0" max="50000" value="6" step="0.5"></div>
+          <div class="input-field-wrap"><div class="ifw-meta"><label class="ifw-label">SWP Duration (Years)</label><input type="number" id="m_swpY_num" class="ifw-num" value="15" step="1"></div><input type="range" id="m_swpY_r" min="0" max="40" value="15" step="1"></div>
+        </div>
+        <div class="inline-lead">
+          <h3>Plan Your Retirement</h3>
+          <p>These numbers are your blueprint. Let Rahul help you build this exact plan with the right mutual funds.</p>
+          <div id="mp-lead-wrap">
+            <div class="form-row-2">
+              <div class="fg"><label>Name</label><input type="text" id="mp_name" placeholder="Your name"></div>
+              <div class="fg"><label>Phone</label><input type="tel" id="mp_phone" placeholder="Mobile number"></div>
+            </div>
+            <div class="fg"><label>Current Age</label><select id="mp_age"><option value="" disabled selected>Select age range</option><option>25–30</option><option>31–35</option><option>36–40</option><option>41–45</option><option>46–50</option><option>50+</option></select></div>
+            <button class="btn-form" onclick="submitLead('mp-lead-wrap','mp-lead-ok',event,'MultiPhase Page')">Build My Plan →</button>
+            <p class="form-note">🔒 No spam. WhatsApp message within 24 hrs.</p>
+          </div>
+          <div class="form-success-box" id="mp-lead-ok"></div>
+        </div>
+      </div>
+      <div>
+        <div class="metrics-row">
+          <div class="metric-card mc-green"><div class="metric-label">Peak Corpus</div><div class="metric-val mv-green" id="mp_peak">₹0</div><div class="metric-sub">After accumulation</div></div>
+          <div class="metric-card mc-red"><div class="metric-label">Total SWP Paid</div><div class="metric-val" style="color:var(--danger)" id="mp_paid">₹0</div><div class="metric-sub" id="mp_paid_sub"></div></div>
+          <div class="metric-card mc-blue"><div class="metric-label">Terminal Balance</div><div class="metric-val mv-blue" id="mp_term">₹0</div><div class="metric-sub" id="mp_term_sub"></div></div>
+        </div>
+        <div class="alert-box" id="mp_alert"><span>⚠️</span><span id="mp_alert_txt"></span></div>
+        <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>Retirement Plan Analysis</h4></div><div class="ai-insights" id="mp-insights-list"></div></div>
+        <div class="chart-holder">
+          <div class="chart-holder-title">Multi-Phase Wealth Trajectory<div class="legend-row" id="mp_legend"></div></div>
+          <div class="chart-wrap"><canvas id="mpChart" role="img" aria-label="Multi phase wealth chart">Multi-phase chart</canvas></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-head-bar"><div class="table-head-title">Phase-by-Phase Projection</div><button class="export-btn" onclick="exportCSV('mpTable','multiphase')">⬇ Export</button></div>
+          <div class="table-scroll"><table><thead id="mpTHead"></thead><tbody id="mpTBody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+  <section class="seo-section">
+    <h2>What the multi-phase wealth planner does</h2>
+    <p>Most calculators look at one stage of life. This planner joins three of them into a single picture: the years you spend building wealth, a stretch where the money simply compounds, and the years you draw an income from it. That makes it a useful tool for thinking about retirement rather than just accumulation.</p>
+    <p>You set a starting lump sum and a monthly SIP for the accumulation phase, a number of hold years where nothing is added or withdrawn, and then a monthly Systematic Withdrawal Plan (SWP) with an optional annual escalation. The planner tracks your balance through every year and shows whether the corpus lasts.</p>
+    <h2>How the three phases interact</h2>
+    <p>In the <strong>accumulation phase</strong> your SIP instalments and starting capital compound together. In the <strong>hold phase</strong> there are no contributions or withdrawals, so the full balance compounds undisturbed — this is often the quiet workhorse of the plan. In the <strong>withdrawal phase</strong> the corpus keeps earning returns while you take out a monthly income that can rise each year to keep pace with rising costs.</p>
+    <div class="formula-box"><code>Each month: Balance = Balance &times; (1 + i) + SIP &minus; SWP</code></div>
+    <p>The sign of that monthly change decides everything. While the SIP is running the balance climbs; once the SWP starts, the balance only survives if returns keep pace with what you withdraw.</p>
+    <h2>How to read your results</h2>
+    <p>Watch the <strong>peak corpus</strong> reached at the end of the hold phase, the <strong>total SWP paid</strong> across retirement, and the <strong>terminal balance</strong> left at the end. If the planner flags depletion, the fix is usually to lower the SWP, reduce the escalation, or lengthen the accumulation or hold phases. To size the pieces, the <a href="/sip-calculator/">SIP calculator</a> and <a href="/lumpsum-calculator/">lump sum calculator</a> are good companions.</p>
+    <h2>Frequently asked questions</h2>
+
+      <details class="faq-item"><summary>What does the Multi-Phase Wealth Planner model?</summary><p>It models your money across three stages: an accumulation phase where you invest a monthly SIP, a hold phase where the corpus simply compounds, and a withdrawal phase where you draw a monthly income through a Systematic Withdrawal Plan (SWP).</p></details>
+      <details class="faq-item"><summary>What is an SWP?</summary><p>A Systematic Withdrawal Plan lets you withdraw a fixed amount from your mutual fund holdings at regular intervals, typically monthly. It is commonly used to create a retirement income while the remaining corpus stays invested and continues to grow.</p></details>
+      <details class="faq-item"><summary>Why does the planner sometimes warn about depletion?</summary><p>If your monthly withdrawals plus their yearly escalation grow faster than the portfolio earns, the balance shrinks and can reach zero before the withdrawal phase ends. The warning helps you adjust the SWP amount, the escalation, or the length of the earlier phases.</p></details>
+      <details class="faq-item"><summary>What is the benefit of the hold phase?</summary><p>During the hold phase you neither invest nor withdraw, so the entire corpus compounds undisturbed. Even a few extra years here can significantly raise the income your SWP can later sustain.</p></details></section>
+  <section class="more-tools">
+      <div class="section-label">More Free Tools</div>
+      <h2>Explore Our Other Financial Calculators</h2>
+      <div class="calc-cards-grid">
+        <a class="calc-nav-card" href="/sip-calculator/">
+          <div class="calc-icon-wrap">📈</div>
+          <h3>SIP Calculator</h3>
+          <p>See how much wealth your monthly SIP can build with year-by-year compound growth.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+        <a class="calc-nav-card" href="/lumpsum-calculator/">
+          <div class="calc-icon-wrap">💰</div>
+          <h3>Lump Sum Calculator</h3>
+          <p>Project how a one-time investment grows at different CAGR scenarios over 1–40 years.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+        <a class="calc-nav-card" href="/home-loan-emi-calculator/">
+          <div class="calc-icon-wrap">🏠</div>
+          <h3>Home Loan EMI Calculator</h3>
+          <p>Know your exact EMI, total interest and the real cost of your home loan.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+        <a class="calc-nav-card" href="/loan-eligibility-calculator/">
+          <div class="calc-icon-wrap">✅</div>
+          <h3>Loan Eligibility Calculator</h3>
+          <p>Find the maximum home loan you qualify for based on income and FOIR norms.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+      </div>
+    </section>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-brand"><span>💎</span> Nidesh Financial</div>
+        <p>AMFI Registered Mutual Fund Distributor based in Kalyan, serving Thane &amp; Mumbai since 2016.</p>
+        <p>Mon–Sat · 9 AM – 8 PM</p>
+        <p><a href="tel:+919819590598">📞 +91 98195 90598</a></p>
+        <p><a href="https://wa.me/919819590598" target="_blank" rel="noopener">💬 WhatsApp Us</a></p>
+        <p><a href="mailto:investments.nidesh@outlook.com">✉️ investments.nidesh@outlook.com</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>Free Calculators</h4>
+        <a href="/sip-calculator/">SIP Calculator</a>
+      <a href="/lumpsum-calculator/">Lump Sum Calculator</a>
+      <a href="/multi-phase-wealth-planner/">Multi-Phase Wealth Planner</a>
+      <a href="/home-loan-emi-calculator/">Home Loan EMI Calculator</a>
+      <a href="/loan-eligibility-calculator/">Loan Eligibility Calculator</a>
+      </div>
+      <div class="footer-col">
+        <h4>Service Areas</h4>
+        <a href="/mutual-fund-advisor-kalyan/">Mutual Fund Advisor in Kalyan</a>
+      <a href="/mutual-fund-advisor-dombivali/">Mutual Fund Advisor in Dombivali</a>
+      <a href="/financial-advisor-mumbai/">Financial Advisor in Mumbai</a>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <p>© 2025 Nidesh Financial Services · Kalyan, Maharashtra · AMFI Registered MFD</p>
+      <p>Mutual fund investments are subject to market risks. Past performance is not indicative of future returns. All projections are illustrative only. This is not financial advice.</p>
+    </div>
+  </div>
+</footer>
+<!-- MODAL -->
+<div class="modal-overlay" id="mainModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Book a Free Consultation</h3>
+    <p>Tell us a bit about yourself and Rahul will reach out within 24 hours.</p>
+    <div id="modal-form-wrap">
+      <div class="form-row-2">
+        <div class="fg"><label>Full Name</label><input type="text" id="mf_name" placeholder="Your name"></div>
+        <div class="fg"><label>Mobile</label><input type="tel" id="mf_phone" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+      <div class="fg"><label>I'm Interested In</label>
+        <select id="mf_goal">
+          <option value="" disabled selected>Select…</option>
+          <option>Start a SIP</option><option>Open Demat Account</option>
+          <option>Tax Saving (ELSS)</option><option>Retirement Planning</option>
+          <option>Child Education Planning</option><option>Review Existing Portfolio</option>
+          <option>Home Loan Guidance</option>
+        </select>
+      </div>
+      <div class="fg"><label>Monthly Income (Optional)</label>
+        <select id="mf_income">
+          <option value="" disabled selected>Select…</option>
+          <option>₹25K–₹50K</option><option>₹50K–₹1L</option><option>₹1L–₹2L</option><option>₹2L+</option>
+        </select>
+      </div>
+      <button class="btn-form" onclick="submitLead('modal-form-wrap','modal-ok',event,'Modal')">Request Free Consultation →</button>
+      <p class="form-note">🔒 We never spam. One call to understand your needs.</p>
+    </div>
+    <div class="form-success-box" id="modal-ok"></div>
+  </div>
+</div>
+
+<!-- FLOAT -->
+<button class="float-btn" onclick="openModal()">💬 Free Consultation</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-title">✅ We've got your details!</div>
+  <div>Expect a WhatsApp message within 24 hours.</div>
+</div>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does the Multi-Phase Wealth Planner model?", "acceptedAnswer": {"@type": "Answer", "text": "It models your money across three stages: an accumulation phase where you invest a monthly SIP, a hold phase where the corpus simply compounds, and a withdrawal phase where you draw a monthly income through a Systematic Withdrawal Plan (SWP)."}}, {"@type": "Question", "name": "What is an SWP?", "acceptedAnswer": {"@type": "Answer", "text": "A Systematic Withdrawal Plan lets you withdraw a fixed amount from your mutual fund holdings at regular intervals, typically monthly. It is commonly used to create a retirement income while the remaining corpus stays invested and continues to grow."}}, {"@type": "Question", "name": "Why does the planner sometimes warn about depletion?", "acceptedAnswer": {"@type": "Answer", "text": "If your monthly withdrawals plus their yearly escalation grow faster than the portfolio earns, the balance shrinks and can reach zero before the withdrawal phase ends. The warning helps you adjust the SWP amount, the escalation, or the length of the earlier phases."}}, {"@type": "Question", "name": "What is the benefit of the hold phase?", "acceptedAnswer": {"@type": "Answer", "text": "During the hold phase you neither invest nor withdraw, so the entire corpus compounds undisturbed. Even a few extra years here can significantly raise the income your SWP can later sustain."}}]}</script>
+
+<script>
+function CALC(){
+  var lump=gN('m_lump_num'), rate=gN('m_rate_num'), sip=gN('m_sip_num');
+  var sipY=Math.round(gN('m_sipY_num')), pauseY=Math.round(gN('m_pauseY_num'));
+  var swp=gN('m_swp_num'), swpY=Math.round(gN('m_swpY_num'));
+  var stepType=gS('m_stepType'), stepV=gN('m_stepV_num');
+  var i=rate/100/12, bal=lump, labels=[], balArr=[], rows='', totalPaid=0, depleted=false, y, mo;
+  for(y=1;y<=sipY;y++){
+    for(mo=0;mo<12;mo++){ bal=bal*(1+i)+sip; }
+    labels.push('Yr '+y); balArr.push(Math.round(bal));
+    rows+='<tr><td>Year '+y+'</td><td>Active SIP</td><td>+'+fmt(sip*12)+'</td><td>'+fmt(bal)+'</td></tr>';
+  }
+  for(y=1;y<=pauseY;y++){
+    for(mo=0;mo<12;mo++){ bal=bal*(1+i); }
+    labels.push('Yr '+(sipY+y)); balArr.push(Math.round(bal));
+    rows+='<tr><td>Year '+(sipY+y)+'</td><td>Hold &amp; Compound</td><td>&mdash;</td><td>'+fmt(bal)+'</td></tr>';
+  }
+  var peak=bal, curSwp=swp;
+  for(y=1;y<=swpY;y++){
+    var yearPaid=0;
+    for(mo=0;mo<12;mo++){ bal=bal*(1+i)-curSwp; yearPaid+=curSwp; if(bal<0){bal=0;depleted=true;} }
+    totalPaid+=yearPaid;
+    labels.push('Yr '+(sipY+pauseY+y)); balArr.push(Math.round(bal));
+    rows+='<tr><td>Year '+(sipY+pauseY+y)+'</td><td>SWP Income</td><td>-'+fmt(yearPaid)+'</td><td>'+fmt(bal)+'</td></tr>';
+    if(stepType==='pct'){ curSwp=curSwp*(1+stepV/100); } else { curSwp=curSwp+stepV; }
+  }
+  var term=bal;
+  document.getElementById('mp_peak').textContent=fmt(peak);
+  document.getElementById('mp_paid').textContent=fmt(totalPaid);
+  document.getElementById('mp_term').textContent=fmt(term);
+  document.getElementById('mp_paid_sub').textContent='over '+swpY+' years';
+  document.getElementById('mp_term_sub').textContent=depleted?'corpus depleted':'remaining balance';
+  var al=document.getElementById('mp_alert'), at=document.getElementById('mp_alert_txt');
+  if(al){ if(depleted){ al.style.display='flex'; if(at) at.textContent='Your SWP withdrawals exhaust the corpus before the withdrawal phase ends. Lower the monthly SWP, reduce escalation, or extend the accumulation phase.'; } else { al.style.display='none'; } }
+  var leg=document.getElementById('mp_legend');
+  if(leg) leg.innerHTML='<div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Portfolio Balance</div>';
+  document.getElementById('mpTHead').innerHTML='<tr><th>Period</th><th>Phase</th><th>Cash Flow</th><th>Balance</th></tr>';
+  document.getElementById('mpTBody').innerHTML=rows;
+  makeChart('mpChart',{type:'line',data:{labels:labels,datasets:[
+    {label:'Balance',data:balArr,borderColor:'#2563EB',backgroundColor:chartColors(['#2563EB'])[0],fill:true,tension:.3,borderWidth:2,pointRadius:0}
+  ]},options:chartOpts(labels.length)});
+  renderInsights('mp-insights-list',getMPInsights(peak,totalPaid,term,sipY,pauseY,swpY,swp,depleted));
+}
+</script>
+
+
+<script>
+function wireCalc(){
+  document.querySelectorAll('input[type=range]').forEach(function(r){
+    var num=document.getElementById(r.id.replace(/_r$/,'_num'));
+    r.addEventListener('input',function(){ if(num) num.value=r.value; CALC(); });
+    if(num) num.addEventListener('input',function(){ r.value=num.value; CALC(); });
+  });
+  var st=document.getElementById('m_stepType'); if(st) st.addEventListener('change',CALC);
+  CALC();
+}
+document.addEventListener('DOMContentLoaded', wireCalc);
+</script>
+
+</body></html>

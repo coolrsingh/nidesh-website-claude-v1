@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIP Calculator — Monthly SIP Returns & Wealth Projection | Nidesh</title>
+<meta name="description" content="Free SIP calculator with year-by-year compound growth projections. Plan your mutual fund SIP with expert guidance in Kalyan, Thane & Mumbai.">
+<link rel="canonical" href="https://nidesh.com/sip-calculator/">
+<meta property="og:title" content="SIP Calculator — Monthly SIP Returns & Wealth Projection | Nidesh">
+<meta property="og:description" content="Free SIP calculator with year-by-year compound growth projections. Plan your mutual fund SIP with expert guidance in Kalyan, Thane & Mumbai.">
+<meta property="og:url" content="https://nidesh.com/sip-calculator/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">💎</div>
+    <div>Nidesh Financial<span>SEBI Reg. MFD · Kalyan · Thane · Mumbai</span></div>
+  </a>
+  <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="/" class="nav-link">Home</a>
+    <div class="nav-dropdown">
+      <button class="nav-link active" onclick="toggleDrop(this)">Calculators ▾</button>
+      <div class="nav-drop-menu">
+        <a href="/sip-calculator/" class="active">📈 SIP Calculator</a>
+        <a href="/lumpsum-calculator/" class="">💰 Lump Sum Calculator</a>
+        <a href="/multi-phase-wealth-planner/" class="">🚀 Multi-Phase Wealth Planner</a>
+        <a href="/home-loan-emi-calculator/" class="">🏠 Home Loan EMI Calculator</a>
+        <a href="/loan-eligibility-calculator/" class="">✅ Loan Eligibility Calculator</a>
+      </div>
+    </div>
+    <div class="nav-dropdown">
+      <button class="nav-link" onclick="toggleDrop(this)">Locations ▾</button>
+      <div class="nav-drop-menu">
+        <a href="/mutual-fund-advisor-kalyan/" class="">📍 Mutual Fund Advisor in Kalyan</a>
+        <a href="/mutual-fund-advisor-dombivali/" class="">📍 Mutual Fund Advisor in Dombivali</a>
+        <a href="/financial-advisor-mumbai/" class="">📍 Financial Advisor in Mumbai</a>
+      </div>
+    </div>
+    <button class="nav-link nav-cta" onclick="openModal()">Free Consult</button>
+  </div>
+</nav>
+<main class="calc-page-wrapper">
+  <div class="calc-page-header">
+    <div class="breadcrumb"><a href="/">Home</a><span>/</span>SIP Calculator</div>
+    <h1>SIP Calculator: See How Much Wealth Your Monthly <em>SIP</em> Will Build</h1>
+    <p>Adjust the monthly amount, expected return and tenure to project your corpus instantly.</p>
+  </div>
+
+    <div class="calc-layout wide">
+      <div>
+        <div class="calc-card" style="margin-bottom:1.25rem;">
+          <div class="calc-card-title">⚙️ SIP Parameters</div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Monthly SIP Amount (₹)</label><input type="number" id="s_sip_num" class="ifw-num" value="10000" step="500"></div>
+            <input type="range" id="s_sip_r" min="1000" max="500000" value="10000" step="500">
+          </div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Expected CAGR (% p.a.)</label><input type="number" id="s_rate_num" class="ifw-num" value="12" step="0.5"></div>
+            <input type="range" id="s_rate_r" min="1" max="40" value="12" step="0.5">
+          </div>
+          <div class="input-field-wrap">
+            <div class="ifw-meta"><label class="ifw-label">Investment Tenure (Years)</label><input type="number" id="s_yrs_num" class="ifw-num" value="15" step="1"></div>
+            <input type="range" id="s_yrs_r" min="1" max="40" value="15" step="1">
+          </div>
+        </div>
+        <div class="inline-lead" id="sip-lead-form">
+          <h3>Talk to Rahul</h3>
+          <p>Get a personalised SIP recommendation based on your income, goals and risk appetite — free, no obligation.</p>
+          <div id="sip-lead-wrap">
+            <div class="form-row-2">
+              <div class="fg"><label>Name</label><input type="text" id="sl_name" placeholder="Your name"></div>
+              <div class="fg"><label>Phone</label><input type="tel" id="sl_phone" placeholder="Mobile number"></div>
+            </div>
+            <div class="fg">
+              <label>Monthly SIP Budget</label>
+              <select id="sl_budget">
+                <option value="" disabled selected>Select range</option>
+                <option>₹500–₹2,000</option><option>₹2,000–₹5,000</option>
+                <option>₹5,000–₹10,000</option><option>₹10,000–₹25,000</option>
+                <option>₹25,000+</option>
+              </select>
+            </div>
+            <button class="btn-form" onclick="submitLead('sip-lead-wrap','sip-lead-ok',event,'SIP Page')">Start My SIP →</button>
+            <p class="form-note">🔒 No spam. We call once to understand your needs.</p>
+          </div>
+          <div class="form-success-box" id="sip-lead-ok">
+            <span class="big-tick">✅</span>
+            <strong>Received! Expect a WhatsApp message soon.</strong>
+            <p>Rahul will reach out within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="metrics-row">
+          <div class="metric-card mc-green"><div class="metric-label">Total Invested</div><div class="metric-val mv-green" id="sip_inv">₹0</div><div class="metric-sub" id="sip_inv_sub"></div></div>
+          <div class="metric-card mc-amber"><div class="metric-label">Returns Earned</div><div class="metric-val mv-amber" id="sip_ret">₹0</div><div class="metric-sub" id="sip_ret_sub"></div></div>
+          <div class="metric-card mc-blue"><div class="metric-label">Terminal Corpus</div><div class="metric-val mv-blue" id="sip_corp">₹0</div><div class="metric-sub" id="sip_corp_sub"></div></div>
+        </div>
+        <div class="ai-card" id="sip-insights">
+          <div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>What Your Numbers Say</h4></div>
+          <div class="ai-insights" id="sip-insights-list"></div>
+        </div>
+        <div class="chart-holder">
+          <div class="chart-holder-title">
+            Corpus Growth Over Time
+            <div class="legend-row"><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Invested Amount</div><div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Total Corpus</div></div>
+          </div>
+          <div class="chart-wrap"><canvas id="sipChart" role="img" aria-label="SIP corpus growth chart">SIP growth</canvas></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-head-bar"><div class="table-head-title">Year-by-Year Projection</div><button class="export-btn" onclick="exportCSV('sipTable','sip')">⬇ Export CSV</button></div>
+          <div class="table-scroll"><table><thead id="sipTHead"></thead><tbody id="sipTBody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+  <section class="seo-section">
+    <h2>What this SIP calculator does</h2>
+    <p>This SIP calculator helps you picture how a regular monthly investment in mutual funds can grow into a meaningful corpus over time. You enter three things — the amount you can invest each month, the annual return you expect, and how many years you plan to stay invested — and the tool projects your final corpus along with how much of it is your own contribution and how much is growth.</p>
+    <p>The real lesson most people take away is the gap between what they put in and what they end up with. Over long periods, the returns component can dwarf the invested amount. That is compounding at work, and it is the single biggest reason to start a SIP early rather than waiting for a &ldquo;perfect&rdquo; time.</p>
+    <h2>How the SIP formula works</h2>
+    <p>A SIP is essentially a series of monthly investments, each of which grows for a different length of time. The calculator compounds every instalment from the month it is invested until the end of your tenure, which is the same as the standard future-value-of-a-series formula:</p>
+    <div class="formula-box"><code>Corpus = P &times; [ ((1 + i)<sup>n</sup> &minus; 1) / i ] &times; (1 + i)</code></div>
+    <p>Here <strong>P</strong> is your monthly amount, <strong>i</strong> is the monthly rate (your annual return divided by twelve), and <strong>n</strong> is the number of months. The early instalments compound the longest, which is why a SIP started a few years sooner can finish well ahead of one started later, even for the same total outlay.</p>
+    <h2>How to read your results</h2>
+    <p>Look at three figures together. <strong>Total invested</strong> is the discipline you bring; <strong>returns earned</strong> is what the market adds; and <strong>terminal corpus</strong> is the sum of both. If the corpus looks small, try extending the tenure before increasing the amount — time usually does more work than a bigger cheque. Once you are comfortable with a monthly figure, a small annual step-up keeps your investing in line with your income.</p>
+    <p>When you have a number that feels right, it helps to compare paths. You might also run a <a href="/lumpsum-calculator/">one-time lump sum</a> scenario, or map your full retirement journey with the <a href="/multi-phase-wealth-planner/">multi-phase wealth planner</a>.</p>
+    <h2>Frequently asked questions</h2>
+
+      <details class="faq-item"><summary>What is a SIP and how does this calculator work?</summary><p>A Systematic Investment Plan (SIP) is a way of investing a fixed amount in a mutual fund every month. This calculator takes your monthly amount, an expected annual return (CAGR) and the number of years, then compounds each instalment month-on-month to estimate your final corpus, the total you invested and the returns earned.</p></details>
+      <details class="faq-item"><summary>Are the returns shown guaranteed?</summary><p>No. Mutual fund returns are market-linked and vary year to year. The figure you enter is an assumption used only to illustrate the power of compounding. Actual outcomes can be higher or lower, which is why a realistic 10–14% is more sensible than an optimistic number.</p></details>
+      <details class="faq-item"><summary>What is a Step-Up SIP?</summary><p>A Step-Up SIP increases your monthly instalment by a fixed percentage every year, usually in line with salary growth. Even a 10% annual step-up can meaningfully increase your final corpus, because the extra amount also gets the full benefit of compounding.</p></details>
+      <details class="faq-item"><summary>How long should I stay invested?</summary><p>For equity mutual funds a horizon of at least five to seven years is generally suggested, and longer is better. Longer tenures smooth out market cycles and let compounding do the heavy lifting.</p></details></section>
+  <section class="more-tools">
+      <div class="section-label">More Free Tools</div>
+      <h2>Explore Our Other Financial Calculators</h2>
+      <div class="calc-cards-grid">
+        <a class="calc-nav-card" href="/lumpsum-calculator/">
+          <div class="calc-icon-wrap">💰</div>
+          <h3>Lump Sum Calculator</h3>
+          <p>Project how a one-time investment grows at different CAGR scenarios over 1–40 years.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+        <a class="calc-nav-card" href="/multi-phase-wealth-planner/">
+          <div class="calc-icon-wrap">🚀</div>
+          <h3>Multi-Phase Wealth Planner</h3>
+          <p>Model your full lifecycle — SIP accumulation, compounding pause and SWP retirement income.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+        <a class="calc-nav-card" href="/home-loan-emi-calculator/">
+          <div class="calc-icon-wrap">🏠</div>
+          <h3>Home Loan EMI Calculator</h3>
+          <p>Know your exact EMI, total interest and the real cost of your home loan.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+        <a class="calc-nav-card" href="/loan-eligibility-calculator/">
+          <div class="calc-icon-wrap">✅</div>
+          <h3>Loan Eligibility Calculator</h3>
+          <p>Find the maximum home loan you qualify for based on income and FOIR norms.</p>
+          <div class="card-arrow">Open Calculator →</div>
+        </a>
+      </div>
+    </section>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-brand"><span>💎</span> Nidesh Financial</div>
+        <p>AMFI Registered Mutual Fund Distributor based in Kalyan, serving Thane &amp; Mumbai since 2016.</p>
+        <p>Mon–Sat · 9 AM – 8 PM</p>
+        <p><a href="tel:+919819590598">📞 +91 98195 90598</a></p>
+        <p><a href="https://wa.me/919819590598" target="_blank" rel="noopener">💬 WhatsApp Us</a></p>
+        <p><a href="mailto:investments.nidesh@outlook.com">✉️ investments.nidesh@outlook.com</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>Free Calculators</h4>
+        <a href="/sip-calculator/">SIP Calculator</a>
+      <a href="/lumpsum-calculator/">Lump Sum Calculator</a>
+      <a href="/multi-phase-wealth-planner/">Multi-Phase Wealth Planner</a>
+      <a href="/home-loan-emi-calculator/">Home Loan EMI Calculator</a>
+      <a href="/loan-eligibility-calculator/">Loan Eligibility Calculator</a>
+      </div>
+      <div class="footer-col">
+        <h4>Service Areas</h4>
+        <a href="/mutual-fund-advisor-kalyan/">Mutual Fund Advisor in Kalyan</a>
+      <a href="/mutual-fund-advisor-dombivali/">Mutual Fund Advisor in Dombivali</a>
+      <a href="/financial-advisor-mumbai/">Financial Advisor in Mumbai</a>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <p>© 2025 Nidesh Financial Services · Kalyan, Maharashtra · AMFI Registered MFD</p>
+      <p>Mutual fund investments are subject to market risks. Past performance is not indicative of future returns. All projections are illustrative only. This is not financial advice.</p>
+    </div>
+  </div>
+</footer>
+<!-- MODAL -->
+<div class="modal-overlay" id="mainModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Book a Free Consultation</h3>
+    <p>Tell us a bit about yourself and Rahul will reach out within 24 hours.</p>
+    <div id="modal-form-wrap">
+      <div class="form-row-2">
+        <div class="fg"><label>Full Name</label><input type="text" id="mf_name" placeholder="Your name"></div>
+        <div class="fg"><label>Mobile</label><input type="tel" id="mf_phone" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+      <div class="fg"><label>I'm Interested In</label>
+        <select id="mf_goal">
+          <option value="" disabled selected>Select…</option>
+          <option>Start a SIP</option><option>Open Demat Account</option>
+          <option>Tax Saving (ELSS)</option><option>Retirement Planning</option>
+          <option>Child Education Planning</option><option>Review Existing Portfolio</option>
+          <option>Home Loan Guidance</option>
+        </select>
+      </div>
+      <div class="fg"><label>Monthly Income (Optional)</label>
+        <select id="mf_income">
+          <option value="" disabled selected>Select…</option>
+          <option>₹25K–₹50K</option><option>₹50K–₹1L</option><option>₹1L–₹2L</option><option>₹2L+</option>
+        </select>
+      </div>
+      <button class="btn-form" onclick="submitLead('modal-form-wrap','modal-ok',event,'Modal')">Request Free Consultation →</button>
+      <p class="form-note">🔒 We never spam. One call to understand your needs.</p>
+    </div>
+    <div class="form-success-box" id="modal-ok"></div>
+  </div>
+</div>
+
+<!-- FLOAT -->
+<button class="float-btn" onclick="openModal()">💬 Free Consultation</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-title">✅ We've got your details!</div>
+  <div>Expect a WhatsApp message within 24 hours.</div>
+</div>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a SIP and how does this calculator work?", "acceptedAnswer": {"@type": "Answer", "text": "A Systematic Investment Plan (SIP) is a way of investing a fixed amount in a mutual fund every month. This calculator takes your monthly amount, an expected annual return (CAGR) and the number of years, then compounds each instalment month-on-month to estimate your final corpus, the total you invested and the returns earned."}}, {"@type": "Question", "name": "Are the returns shown guaranteed?", "acceptedAnswer": {"@type": "Answer", "text": "No. Mutual fund returns are market-linked and vary year to year. The figure you enter is an assumption used only to illustrate the power of compounding. Actual outcomes can be higher or lower, which is why a realistic 10\u201314% is more sensible than an optimistic number."}}, {"@type": "Question", "name": "What is a Step-Up SIP?", "acceptedAnswer": {"@type": "Answer", "text": "A Step-Up SIP increases your monthly instalment by a fixed percentage every year, usually in line with salary growth. Even a 10% annual step-up can meaningfully increase your final corpus, because the extra amount also gets the full benefit of compounding."}}, {"@type": "Question", "name": "How long should I stay invested?", "acceptedAnswer": {"@type": "Answer", "text": "For equity mutual funds a horizon of at least five to seven years is generally suggested, and longer is better. Longer tenures smooth out market cycles and let compounding do the heavy lifting."}}]}</script>
+
+<script>
+function CALC(){
+  var sip=gN('s_sip_num'), rate=gN('s_rate_num'), years=Math.round(gN('s_yrs_num'));
+  var i=rate/100/12, n=years*12;
+  var corpus = sip*(i>0?((Math.pow(1+i,n)-1)/i)*(1+i):n);
+  var invested = sip*n, returns = corpus-invested;
+  document.getElementById('sip_inv').textContent=fmt(invested);
+  document.getElementById('sip_ret').textContent=fmt(returns);
+  document.getElementById('sip_corp').textContent=fmt(corpus);
+  document.getElementById('sip_inv_sub').textContent='Over '+years+' years';
+  document.getElementById('sip_ret_sub').textContent=(invested>0?((returns/invested)*100).toFixed(0):0)+'% gain';
+  document.getElementById('sip_corp_sub').textContent='at '+rate+'% CAGR';
+  var labels=[],invArr=[],corpArr=[],rows='';
+  for(var y=1;y<=years;y++){
+    var m=y*12;
+    var c=sip*(i>0?((Math.pow(1+i,m)-1)/i)*(1+i):m), inv=sip*m;
+    labels.push('Yr '+y); invArr.push(Math.round(inv)); corpArr.push(Math.round(c));
+    rows+='<tr><td>Year '+y+'</td><td>'+fmt(inv)+'</td><td>'+fmt(c-inv)+'</td><td>'+fmt(c)+'</td></tr>';
+  }
+  document.getElementById('sipTHead').innerHTML='<tr><th>Period</th><th>Invested</th><th>Returns</th><th>Corpus</th></tr>';
+  document.getElementById('sipTBody').innerHTML=rows;
+  makeChart('sipChart',{type:'line',data:{labels:labels,datasets:[
+    {label:'Invested',data:invArr,borderColor:'#10B981',backgroundColor:chartColors(['#10B981'])[0],fill:true,tension:.35,borderWidth:2,pointRadius:0},
+    {label:'Corpus',data:corpArr,borderColor:'#2563EB',backgroundColor:chartColors(['#2563EB'])[0],fill:true,tension:.35,borderWidth:2,pointRadius:0}
+  ]},options:chartOpts(years)});
+  renderInsights('sip-insights-list',getSIPInsights(sip,rate,years,invested,corpus));
+}
+</script>
+
+
+<script>
+function wireCalc(){
+  document.querySelectorAll('input[type=range]').forEach(function(r){
+    var num=document.getElementById(r.id.replace(/_r$/,'_num'));
+    r.addEventListener('input',function(){ if(num) num.value=r.value; CALC(); });
+    if(num) num.addEventListener('input',function(){ r.value=num.value; CALC(); });
+  });
+  var st=document.getElementById('m_stepType'); if(st) st.addEventListener('change',CALC);
+  CALC();
+}
+document.addEventListener('DOMContentLoaded', wireCalc);
+</script>
+
+</body></html>
