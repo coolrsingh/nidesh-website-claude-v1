@@ -12,6 +12,10 @@
     gtag('config', 'G-VGMMW4BRK0');
   </script>
 
+<!-- AdSense loader -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9282716663809523"
+     crossorigin="anonymous"></script>
+
 <script>
   // Define dataLayer and the gtag function.
   window.dataLayer = window.dataLayer || [];
@@ -57,6 +61,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+
+/* ═══ GLOBAL TYPE SCALE ═══ */
+/* All font-sizes in this file use rem or clamp(); raising the root size
+scales every heading, body text and label uniformly. 112.5% = +12.5%.
+Colors, fonts and design tokens below are unchanged. */
+html { font-size: 112.5%; }
 /* ═══ DESIGN TOKENS ═══ */
 :root {
   --sky: #EBF4FF;
@@ -491,6 +501,21 @@ footer {
   .services-grid { grid-template-columns: 1fr; }
   .metrics-row { grid-template-columns: 1fr; }
 }
+
+/* ═══ BLOG TOPIC FILTER ═══
+   Filters the existing articles by their topic. Reuses the site palette:
+   --sky / --blue-light / --blue / --navy / --border. No new colors or fonts. */
+.blog-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2.5rem; }
+.blog-filter-btn {
+  font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 600;
+  padding: 0.5rem 1.1rem; border-radius: 100px; cursor: pointer;
+  background: white; color: var(--text-mid);
+  border: 1.5px solid var(--border); transition: all 0.2s;
+}
+.blog-filter-btn:hover { border-color: var(--blue-light); color: var(--blue); background: var(--sky); }
+.blog-filter-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+/* Cards sit on the page background, not the white wrapper, so borders read clearly */
+#page-blog .blog-wrapper { background: var(--off-white); }
 </style>
 </head>
 <body>
@@ -889,9 +914,17 @@ footer {
       <p class="blog-subtitle">Expert perspectives on wealth building for working professionals in India</p>
     </div>
 
+    <!-- Topic filters -->
+    <div class="blog-filters" role="tablist" aria-label="Filter articles by topic">
+      <button type="button" class="blog-filter-btn active" data-filter="all" onclick="filterBlog('all')">All Topics</button>
+      <button type="button" class="blog-filter-btn" data-filter="Investment Strategy" onclick="filterBlog('Investment Strategy')">Investment Strategy</button>
+      <button type="button" class="blog-filter-btn" data-filter="Retirement Planning" onclick="filterBlog('Retirement Planning')">Retirement Planning</button>
+      <button type="button" class="blog-filter-btn" data-filter="Tax Planning" onclick="filterBlog('Tax Planning')">Tax Planning</button>
+    </div>
+
     <!-- Article 1 -->
     <article class="blog-card">
-      <div class="blog-tag">Investment Strategy</div>
+      <div class="blog-tag" data-topic="Investment Strategy">Investment Strategy</div>
       <h2 class="blog-art-title">The ₹1 Crore Mistake: What Waiting 5 Years to Invest Really Costs You</h2>
       <div class="blog-meta">By Expert Advisor · 10+ Years Experience · 8 min read</div>
       <div class="blog-body">
@@ -955,7 +988,7 @@ footer {
 
     <!-- Article 2 -->
     <article class="blog-card">
-      <div class="blog-tag">Retirement Planning</div>
+      <div class="blog-tag" data-topic="Retirement Planning">Retirement Planning</div>
       <h2 class="blog-art-title">Why 95% of Indians Are Not Retirement-Ready — And How to Fix It</h2>
       <div class="blog-meta">By Expert Advisor · 10+ Years Experience · 10 min read</div>
       <div class="blog-body">
@@ -1010,7 +1043,7 @@ footer {
 
     <!-- Article 3 -->
     <article class="blog-card">
-      <div class="blog-tag">Tax Planning</div>
+      <div class="blog-tag" data-topic="Tax Planning">Tax Planning</div>
       <h2 class="blog-art-title">ELSS vs PPF vs NPS: Which Tax-Saving Option Gives You the Best Returns?</h2>
       <div class="blog-meta">By Expert Advisor · 10+ Years Experience · 7 min read</div>
       <div class="blog-body">
@@ -1454,43 +1487,79 @@ function exportCSV(tableIdPrefix, mode) {
 }
 
 /* ═══ WIRE UP ALL SLIDERS ═══ */
+/* ═══ SMART SLIDER ═══
+   Money sliders (SIP amount, lump sum, loan amount, income) are mapped with a
+   power curve: value = (position)^GAMMA * range. Most real SIPs are under ₹2L,
+   so the low end gets fine control while the unrealistic top end is compressed.
+   Percent / year sliders stay linear (wireSlider smart=false). */
+const SMART_GAMMA = 1.5;      // curve steepness
+const SMART_POS   = 1000;     // slider travel range
+const SMART_SLIDERS = ['s_sip','l_lump','m_lump','m_sip','m_swp','hl_amt','el_sal'];
+
+function filterBlog(topic) {
+  document.querySelectorAll('.blog-filter-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-filter') === topic);
+  });
+  document.querySelectorAll('#page-blog article.blog-card').forEach(function(a){
+    const t = a.querySelector('.blog-tag')?.getAttribute('data-topic');
+    a.hidden = (topic !== 'all' && t !== topic);
+  });
+}
+
+function wireSlider(numId, sliderId, onCalc, smart){
+  const ne = document.getElementById(numId), re = document.getElementById(sliderId);
+  if(!ne || !re) return;
+  const mn = parseFloat(re.min)||0, mx = parseFloat(re.max)||0, sc = mx-mn;
+  const g  = smart ? SMART_GAMMA : 1;
+  const step = parseFloat(ne.step) || 1;
+
+  // Linear sliders keep their native min/max/step.
+  // Smart sliders use the native range only as a value range; the slider itself
+  // is rebuilt as a 0..SMART_POS position track.
+  if(smart){
+    re.step = 1;
+    re.min  = 0;
+    re.max  = SMART_POS;
+    const lo = mn, hi = mx;   // remember the real value bounds
+
+    const posToVal = f => lo + Math.pow(Math.max(0, Math.min(1, f)), g) * (hi-lo);
+    const valToPos = v => {
+      const frac = (hi > lo) ? Math.max(0, Math.min(1, (v-lo)/(hi-lo))) : 0;
+      return Math.round(SMART_POS * Math.pow(frac, 1/g));
+    };
+
+    ne.addEventListener('input', () => { re.value = valToPos(parseFloat(ne.value)||0); onCalc(); });
+    re.addEventListener('input', () => {
+      const f = parseFloat(re.value)/SMART_POS;
+      const raw = posToVal(f);
+      ne.value = Math.max(lo, Math.min(hi, step > 0 ? Math.round(raw/step)*step : raw));
+      onCalc();
+    });
+    re.value = valToPos(parseFloat(ne.value)||0);
+    return;
+  }
+
+  // Linear path
+  ne.addEventListener('input', () => { re.value = parseFloat(ne.value)||0; onCalc(); });
+  re.addEventListener('input', () => { ne.value = parseFloat(re.value)||0; onCalc(); });
+}
+
 function wireAll() {
-  // SIP
-  [['s_sip','s_sip_r'],['s_rate','s_rate_r'],['s_yrs','s_yrs_r']].forEach(([n,r])=>{
-    const ne = document.getElementById(n+'_num'), re = document.getElementById(r);
-    if(!ne||!re)return;
-    ne.addEventListener('input',()=>{re.value=ne.value;calcSIP();});
-    re.addEventListener('input',()=>{ne.value=re.value;calcSIP();});
-  });
-  // Lump Sum
-  [['l_lump','l_lump_r'],['l_rate','l_rate_r'],['l_yrs','l_yrs_r']].forEach(([n,r])=>{
-    const ne=document.getElementById(n+'_num'),re=document.getElementById(r);
-    if(!ne||!re)return;
-    ne.addEventListener('input',()=>{re.value=ne.value;calcLS();});
-    re.addEventListener('input',()=>{ne.value=re.value;calcLS();});
-  });
-  // Multi
-  ['m_lump','m_rate','m_sip','m_sipY','m_pauseY','m_swp','m_stepV','m_swpY'].forEach(n=>{
-    const ne=document.getElementById(n+'_num'),re=document.getElementById(n+'_r');
-    if(!ne||!re)return;
-    ne.addEventListener('input',()=>{re.value=ne.value;calcMP();});
-    re.addEventListener('input',()=>{ne.value=re.value;calcMP();});
-  });
-  document.getElementById('m_stepType')?.addEventListener('change',calcMP);
-  // Home Loan
-  [['hl_amt','hl_amt_r'],['hl_rate','hl_rate_r'],['hl_yrs','hl_yrs_r']].forEach(([n,r])=>{
-    const ne=document.getElementById(n+'_num'),re=document.getElementById(r);
-    if(!ne||!re)return;
-    ne.addEventListener('input',()=>{re.value=ne.value;calcHL();});
-    re.addEventListener('input',()=>{ne.value=re.value;calcHL();});
-  });
-  // Eligibility
-  [['el_sal','el_sal_r'],['el_rate','el_rate_r'],['el_yrs','el_yrs_r'],['el_foir','el_foir_r']].forEach(([n,r])=>{
-    const ne=document.getElementById(n+'_num'),re=document.getElementById(r);
-    if(!ne||!re)return;
-    ne.addEventListener('input',()=>{re.value=ne.value;calcEL();});
-    re.addEventListener('input',()=>{ne.value=re.value;calcEL();});
-  });
+  const isSmart = id => SMART_SLIDERS.indexOf(id) !== -1;
+  const pairs = [
+    ['s_sip','s_sip_r',calcSIP], ['s_rate','s_rate_r',calcSIP], ['s_yrs','s_yrs_r',calcSIP],
+    ['l_lump','l_lump_r',calcLS], ['l_rate','l_rate_r',calcLS], ['l_yrs','l_yrs_r',calcLS],
+    ['m_lump','m_lump_r',calcMP], ['m_rate','m_rate_r',calcMP],
+    ['m_sip','m_sip_r',calcMP],   ['m_sipY','m_sipY_r',calcMP],
+    ['m_pauseY','m_pauseY_r',calcMP], ['m_swp','m_swp_r',calcMP],
+    ['m_stepV','m_stepV_r',calcMP], ['m_swpY','m_swpY_r',calcMP],
+    ['hl_amt','hl_amt_r',calcHL], ['hl_rate','hl_rate_r',calcHL], ['hl_yrs','hl_yrs_r',calcHL],
+    ['el_sal','el_sal_r',calcEL], ['el_rate','el_rate_r',calcEL],
+    ['el_yrs','el_yrs_r',calcEL], ['el_foir','el_foir_r',calcEL],
+  ];
+  pairs.forEach(([base, slider, calc]) =>
+    wireSlider(base+'_num', slider, calc, isSmart(base)));
+  document.getElementById('m_stepType')?.addEventListener('change', calcMP);
 }
 
 window.onload = () => {
