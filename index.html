@@ -216,6 +216,7 @@ h1.hero-title em { font-style: italic; color: var(--blue); }
 .hero-card-val { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--navy); }
 .hero-card-chg { font-size: 0.8rem; font-weight: 600; color: var(--success); background: #ECFDF5; padding: 3px 10px; border-radius: 20px; }
 
+.hero-card-subhead { font-size:0.75rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin:1rem 0 0.5rem; }
 .hero-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1.25rem; }
 .hmini {
   background: var(--sky); border: 1px solid var(--border);
@@ -516,6 +517,12 @@ footer {
 .blog-filter-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
 /* Cards sit on the page background, not the white wrapper, so borders read clearly */
 #page-blog .blog-wrapper { background: var(--off-white); }
+/* ═══ CHART GRID ═══
+   Pairs the primary chart with a complementary one so users see more of the
+   data at once. Reuses the existing chart-card style and brand tokens. */
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+.chart-grid .chart-holder { margin-bottom: 0; }
+@media (max-width: 1000px) { .chart-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -568,6 +575,10 @@ footer {
         </div>
         <div style="position:relative;height:180px;">
           <canvas id="heroChart" role="img" aria-label="Nifty 50 ten year growth">10yr growth chart</canvas>
+        </div>
+        <div class="hero-card-subhead">Year-over-Year Growth</div>
+        <div style="position:relative;height:120px;">
+          <canvas id="heroChart2" role="img" aria-label="Nifty 50 year over year growth">YoY growth chart</canvas>
         </div>
         <div class="hero-mini-grid">
           <div class="hmini"><div class="hmini-label">Large Cap CAGR</div><div class="hmini-val">11–13%</div><div class="hmini-sub">10-yr median</div></div>
@@ -703,12 +714,19 @@ footer {
           <div class="ai-insights" id="sip-insights-list"></div>
         </div>
 
-        <div class="chart-holder">
-          <div class="chart-holder-title">
-            Corpus Growth Over Time
-            <div class="legend-row"><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Invested Amount</div><div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Total Corpus</div></div>
+        <div class="chart-grid">
+          <div class="chart-holder">
+            <div class="chart-holder-title">
+              Corpus Growth Over Time
+              <div class="legend-row"><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Invested Amount</div><div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Total Corpus</div></div>
+            </div>
+            <div class="chart-wrap"><canvas id="sipChart" role="img" aria-label="SIP corpus growth chart">SIP growth</canvas></div>
           </div>
-          <div class="chart-wrap"><canvas id="sipChart" role="img" aria-label="SIP corpus growth chart">SIP growth</canvas></div>
+          <div class="chart-holder">
+            <div class="chart-holder-title">Where Your Corpus Comes From
+    <div class="legend-row"><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Invested</div><div class="legend-item"><div class="legend-dot" style="background:#2563EB"></div>Returns</div></div></div>
+            <div class="chart-wrap"><canvas id="sipChart2" role="img" aria-label="SIP corpus composition chart">SIP composition</canvas></div>
+          </div>
         </div>
 
         <div class="table-wrap">
@@ -755,9 +773,15 @@ footer {
           <div class="metric-card mc-blue"><div class="metric-label">Terminal Value</div><div class="metric-val mv-blue" id="ls_corp">₹0</div><div class="metric-sub" id="ls_corp_sub"></div></div>
         </div>
         <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>What Your Numbers Say</h4></div><div class="ai-insights" id="ls-insights-list"></div></div>
-        <div class="chart-holder">
-          <div class="chart-holder-title">Lump Sum Growth Over Time</div>
-          <div class="chart-wrap"><canvas id="lsChart" role="img" aria-label="Lump sum growth">Lump sum chart</canvas></div>
+        <div class="chart-grid">
+          <div class="chart-holder">
+            <div class="chart-holder-title">Lump Sum Growth Over Time</div>
+            <div class="chart-wrap"><canvas id="lsChart" role="img" aria-label="Lump sum growth">Lump sum chart</canvas></div>
+          </div>
+          <div class="chart-holder">
+            <div class="chart-holder-title">Annual Interest Earned</div>
+            <div class="chart-wrap"><canvas id="lsChart2" role="img" aria-label="Lump sum annual interest chart">Lump sum interest</canvas></div>
+          </div>
         </div>
         <div class="table-wrap">
           <div class="table-head-bar"><div class="table-head-title">Year-by-Year Projection</div><button class="export-btn" onclick="exportCSV('lsTable','lumpsum')">⬇ Export</button></div>
@@ -811,9 +835,15 @@ footer {
         </div>
         <div class="alert-box" id="mp_alert"><span>⚠️</span><span id="mp_alert_txt"></span></div>
         <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>Retirement Plan Analysis</h4></div><div class="ai-insights" id="mp-insights-list"></div></div>
-        <div class="chart-holder">
-          <div class="chart-holder-title">Multi-Phase Wealth Trajectory<div class="legend-row" id="mp_legend"></div></div>
-          <div class="chart-wrap"><canvas id="mpChart" role="img" aria-label="Multi phase wealth chart">Multi-phase chart</canvas></div>
+        <div class="chart-grid">
+          <div class="chart-holder">
+            <div class="chart-holder-title">Multi-Phase Wealth Trajectory<div class="legend-row" id="mp_legend"></div></div>
+            <div class="chart-wrap"><canvas id="mpChart" role="img" aria-label="Multi phase wealth chart">Multi-phase chart</canvas></div>
+          </div>
+          <div class="chart-holder">
+            <div class="chart-holder-title">Net Cash Flow & Corpus</div>
+            <div class="chart-wrap"><canvas id="mpChart2" role="img" aria-label="Multi phase cash flow chart">Multi-phase cash flow</canvas></div>
+          </div>
         </div>
         <div class="table-wrap">
           <div class="table-head-bar"><div class="table-head-title">Phase-by-Phase Projection</div><button class="export-btn" onclick="exportCSV('mpTable','multiphase')">⬇ Export</button></div>
@@ -850,9 +880,16 @@ footer {
           <div class="metric-card mc-amber"><div class="metric-label">Total Payable</div><div class="metric-val mv-amber" id="hl_tot">₹0</div><div class="metric-sub">Principal + interest</div></div>
         </div>
         <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>Loan Analysis</h4></div><div class="ai-insights" id="hl-insights-list"></div></div>
-        <div class="chart-holder">
-          <div class="chart-holder-title">Outstanding Balance Over Years</div>
-          <div class="chart-wrap"><canvas id="hlChart" role="img" aria-label="Home loan balance chart">Loan balance chart</canvas></div>
+        <div class="chart-grid">
+          <div class="chart-holder">
+            <div class="chart-holder-title">Outstanding Balance Over Years</div>
+            <div class="chart-wrap"><canvas id="hlChart" role="img" aria-label="Home loan balance chart">Loan balance chart</canvas></div>
+          </div>
+          <div class="chart-holder">
+            <div class="chart-holder-title">Principal vs Interest Paid
+    <div class="legend-row"><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Principal</div><div class="legend-item"><div class="legend-dot" style="background:#EF4444"></div>Interest</div></div></div>
+            <div class="chart-wrap"><canvas id="hlChart2" role="img" aria-label="Home loan principal vs interest chart">Loan split</canvas></div>
+          </div>
         </div>
         <div class="table-wrap">
           <div class="table-head-bar"><div class="table-head-title">Amortisation Schedule</div><button class="export-btn" onclick="exportCSV('hlTable','homeloan')">⬇ Export</button></div>
@@ -890,9 +927,16 @@ footer {
           <div class="metric-card mc-green"><div class="metric-label">Max Eligible Loan</div><div class="metric-val mv-green" id="el_loan">₹0</div><div class="metric-sub">FOIR-based estimate</div></div>
         </div>
         <div class="ai-card"><div class="ai-card-header"><span class="ai-badge">✨ AI Insight</span><h4>Eligibility Analysis</h4></div><div class="ai-insights" id="el-insights-list"></div></div>
-        <div class="chart-holder">
-          <div class="chart-holder-title">Loan Amortisation at Max Eligibility</div>
-          <div class="chart-wrap"><canvas id="elChart" role="img" aria-label="Loan eligibility amortisation">Loan chart</canvas></div>
+        <div class="chart-grid">
+          <div class="chart-holder">
+            <div class="chart-holder-title">Loan Amortisation at Max Eligibility</div>
+            <div class="chart-wrap"><canvas id="elChart" role="img" aria-label="Loan eligibility amortisation">Loan chart</canvas></div>
+          </div>
+          <div class="chart-holder">
+            <div class="chart-holder-title">Principal vs Interest (Max Eligibility)
+    <div class="legend-row"><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Principal</div><div class="legend-item"><div class="legend-dot" style="background:#F59E0B"></div>Interest</div></div></div>
+            <div class="chart-wrap"><canvas id="elChart2" role="img" aria-label="Eligibility principal vs interest chart">Eligibility split</canvas></div>
+          </div>
         </div>
         <div class="table-wrap">
           <div class="table-head-bar"><div class="table-head-title">Projected Amortisation</div><button class="export-btn" onclick="exportCSV('elTable','eligibility')">⬇ Export</button></div>
@@ -1188,6 +1232,27 @@ function buildHeroChart() {
       }
     }
   });
+
+  // Complementary: year-over-year growth rate (momentum behind the level)
+  const heroVals=[100000,108000,122000,138000,129000,148000,140000,192000,204000,256000,320000];
+  const heroLabels=['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'];
+  const yoy=heroVals.slice(1).map((v,i)=>+(((v-heroVals[i])/heroVals[i])*100).toFixed(1));
+  makeChart('heroChart2', {
+    type:'bar',
+    data:{labels:heroLabels,datasets:[{
+      data:yoy,
+      backgroundColor:yoy.map(v=>v>=0?'rgba(16,185,129,0.75)':'rgba(239,68,68,0.7)'),
+      borderRadius:4
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.parsed.y+'%'}}},
+      scales:{
+        x:{ticks:{color:'#94A3B8',font:{size:9}},grid:{display:false}},
+        y:{ticks:{color:'#94A3B8',font:{size:9},callback:v=>v+'%'},grid:{color:'#F1F5F9'}}
+      }
+    }
+  });
 }
 
 /* ═══ AI INSIGHTS ═══ */
@@ -1292,6 +1357,17 @@ function calcSIP() {
     ]},
     options:chartOpts(labels.length)
   });
+
+  // Complementary: where the corpus comes from (invested vs returns)
+  const retData = corpData.map((c,i)=>Math.max(0,c-invData[i]));
+  makeChart('sipChart2', {
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Invested',data:invData,backgroundColor:'rgba(16,185,129,0.75)',borderRadius:4},
+      {label:'Returns',data:retData,backgroundColor:'rgba(37,99,235,0.75)',borderRadius:4}
+    ]},
+    options:barOpts(labels.length,true)
+  });
 }
 
 /* ═══ LUMP SUM CALC ═══ */
@@ -1301,9 +1377,10 @@ function calcLS() {
   let corpus = lump, labels = [], data = [], rows = '';
   document.getElementById('lsTHead').innerHTML = '<tr><th>Year</th><th>Principal</th><th>Interest This Year</th><th>Year-End Value</th></tr>';
 
+  const intData = [];
   for (let y = 1; y <= years; y++) {
     const start = corpus; corpus = start*(1+r); const int = corpus - start;
-    labels.push('Yr '+y); data.push(Math.round(corpus));
+    labels.push('Yr '+y); data.push(Math.round(corpus)); intData.push(Math.round(int));
     rows += `<tr><td><strong>Yr ${y}</strong></td><td>${fmt(lump)}</td><td style="color:#10B981;font-weight:600">${fmt(int)}</td><td><strong>${fmt(corpus)}</strong></td></tr>`;
   }
 
@@ -1321,6 +1398,13 @@ function calcLS() {
     data:{labels,datasets:[{label:'Portfolio Value',data,borderColor:'#2563EB',backgroundColor:'rgba(37,99,235,0.08)',borderWidth:2.5,fill:true,tension:0.4,pointRadius:2}]},
     options:chartOpts(labels.length)
   });
+
+  // Complementary: annual interest earned
+  makeChart('lsChart2', {
+    type:'bar',
+    data:{labels,datasets:[{label:'Interest Earned',data:intData,backgroundColor:'rgba(14,165,233,0.7)',borderRadius:4}]},
+    options:barOpts(labels.length,true)
+  });
 }
 
 /* ═══ MULTI-PHASE CALC ═══ */
@@ -1333,7 +1417,7 @@ function calcMP() {
   document.getElementById('mpTHead').innerHTML = '<tr><th>Year</th><th>Phase</th><th>Interest</th><th>SWP</th><th>Net CF</th><th>Corpus</th></tr>';
 
   let corpus = lump, peak = lump, paid = 0, deplYr = null, activeSwp = initSwp;
-  let labels = [], data = [], rows = '';
+  let labels = [], data = [], cfData = [], rows = '';
 
   for (let y = 1; y <= total; y++) {
     if (y > ySIP + yPause + 1) activeSwp = stepType === 'pct' ? activeSwp*(1+stepVal/100) : activeSwp + stepVal;
@@ -1350,7 +1434,7 @@ function calcMP() {
     corpus = tempC;
     if (y <= ySIP+yPause) peak = Math.max(peak, corpus);
     intYear = Math.max(0, corpus - yearStart - cashflow);
-    labels.push('Yr '+y); data.push(Math.round(corpus));
+    labels.push('Yr '+y); data.push(Math.round(corpus)); cfData.push(Math.round(cashflow));
 
     let isDepl = false;
     if (y > ySIP+yPause && swpYear > 0 && swpYear > intYear && deplYr === null) { deplYr = y; isDepl = true; pill = 'pill-swp-warn'; }
@@ -1389,6 +1473,16 @@ function calcMP() {
   }
   document.getElementById('mp_legend').innerHTML = datasets.map(d=>`<div class="legend-item"><div class="legend-dot" style="background:${d.borderColor||d.pointBackgroundColor}"></div>${d.label}</div>`).join('');
   makeChart('mpChart', {type:'line',data:{labels,datasets},options:chartOpts(labels.length)});
+
+  // Complementary: net cash flow (inflow+ / outflow-) vs corpus
+  makeChart('mpChart2', {
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Net Cash Flow',data:cfData,backgroundColor:cfData.map(v=>v>=0?'rgba(16,185,129,0.7)':'rgba(239,68,68,0.7)'),borderRadius:4},
+      {label:'Corpus',data:data,borderColor:'#2563EB',backgroundColor:'transparent',type:'line',borderWidth:2.5,tension:0.3,pointRadius:1}
+    ]},
+    options:barOpts(labels.length,true)
+  });
 }
 
 /* ═══ HOME LOAN CALC ═══ */
@@ -1399,11 +1493,12 @@ function calcHL() {
   let balance = P, totalInt = 0, labels = [], data = [], rows = '';
   document.getElementById('hlTHead').innerHTML = '<tr><th>Year</th><th>Annual EMI</th><th>Principal Paid</th><th>Interest Paid</th><th>Balance</th></tr>';
 
+  const pData=[], iData=[];
   for (let y = 1; y <= yrs; y++) {
     let pP=0, iP=0;
     for (let m = 1; m <= 12; m++) { const im=balance*mR, pm=emi-im; iP+=im; pP+=pm; balance-=pm; if(balance<0)balance=0; }
     totalInt += iP;
-    labels.push('Yr '+y); data.push(Math.round(balance));
+    labels.push('Yr '+y); data.push(Math.round(balance)); pData.push(Math.round(pP)); iData.push(Math.round(iP));
     rows += `<tr><td><strong>Yr ${y}</strong></td><td>${fmt(emi*12)}</td><td style="color:#10B981;font-weight:600">${fmt(pP)}</td><td style="color:#EF4444;font-weight:600">${fmt(iP)}</td><td><strong>${fmt(balance)}</strong></td></tr>`;
   }
 
@@ -1417,6 +1512,16 @@ function calcHL() {
   document.getElementById('hlTBody').innerHTML = rows;
 
   makeChart('hlChart', {type:'line',data:{labels,datasets:[{label:'Outstanding Balance',data,borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,0.07)',borderWidth:2.5,fill:true,tension:0.3,pointRadius:2}]},options:chartOpts(yrs)});
+
+  // Complementary: where each year's EMI goes (principal vs interest)
+  makeChart('hlChart2', {
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Principal Paid',data:pData,backgroundColor:'rgba(16,185,129,0.75)',borderRadius:4},
+      {label:'Interest Paid',data:iData,backgroundColor:'rgba(239,68,68,0.7)',borderRadius:4}
+    ]},
+    options:barOpts(yrs,true)
+  });
 }
 
 /* ═══ ELIGIBILITY CALC ═══ */
@@ -1428,10 +1533,11 @@ function calcEL() {
   let balance = maxLoan, labels = [], data = [], rows = '';
   document.getElementById('elTHead').innerHTML = '<tr><th>Year</th><th>Max EMI</th><th>Principal Paid</th><th>Interest Paid</th><th>Balance</th></tr>';
 
+  const pData=[], iData=[];
   for (let y = 1; y <= yrs; y++) {
     let pP=0, iP=0;
     for (let m = 1; m <= 12; m++) { const im=balance*mR, pm=maxEmi-im; iP+=im; pP+=pm; balance-=pm; if(balance<0)balance=0; }
-    labels.push('Yr '+y); data.push(Math.round(balance));
+    labels.push('Yr '+y); data.push(Math.round(balance)); pData.push(Math.round(pP)); iData.push(Math.round(iP));
     rows += `<tr><td><strong>Yr ${y}</strong></td><td>${fmt(maxEmi)}</td><td style="color:#10B981;font-weight:600">${fmt(pP)}</td><td style="color:#F59E0B;font-weight:600">${fmt(iP)}</td><td><strong>${fmt(balance)}</strong></td></tr>`;
   }
 
@@ -1444,9 +1550,51 @@ function calcEL() {
   renderInsights('el-insights-list', getELInsights(sal, foir, maxLoan, maxEmi, lr, yrs));
   document.getElementById('elTBody').innerHTML = rows;
   makeChart('elChart', {type:'line',data:{labels,datasets:[{label:'Balance Remaining',data,borderColor:'#F59E0B',backgroundColor:'rgba(245,158,11,0.07)',borderWidth:2.5,fill:true,tension:0.3,pointRadius:2}]},options:chartOpts(yrs)});
+
+  // Complementary: principal vs interest at max eligibility
+  makeChart('elChart2', {
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Principal Paid',data:pData,backgroundColor:'rgba(16,185,129,0.75)',borderRadius:4},
+      {label:'Interest Paid',data:iData,backgroundColor:'rgba(245,158,11,0.7)',borderRadius:4}
+    ]},
+    options:barOpts(yrs,true)
+  });
 }
 
 /* ═══ CHART OPTIONS ═══ */
+/* ═══ BAR CHART OPTIONS (complementary charts) ═══ */
+function barOpts(n, money){
+  const o = {
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#fff', borderColor:'#DBEAFE', borderWidth:1,
+        titleColor:'#0F172A', bodyColor:'#334155', padding:12,
+        callbacks:{label:c=>{
+          const v=c.parsed.y; if(v===null)return null;
+          if(money){ if(v>=10000000)return ' ₹'+(v/10000000).toFixed(2)+'Cr';
+                     if(v>=100000)return ' ₹'+(v/100000).toFixed(2)+'L';
+                     return ' ₹'+Math.round(v).toLocaleString('en-IN'); }
+          return ' '+v;
+        }}
+      }
+    },
+    scales:{
+      x:{grid:{display:false},ticks:{color:'#94A3B8',font:{size:11},maxTicksLimit:n>20?12:n}},
+      y:{grid:{color:'#F1F8FF'},ticks:{color:'#94A3B8',font:{size:11},callback:v=>{
+        if(money){ if(v>=10000000)return '₹'+(v/10000000).toFixed(1)+'Cr';
+                   if(v>=100000)return '₹'+(v/100000).toFixed(0)+'L';
+                   return '₹'+v.toLocaleString('en-IN'); }
+        return v;
+      }}}
+    }
+  };
+  return o;
+}
+
 function chartOpts(n) {
   return {
     responsive:true, maintainAspectRatio:false,
